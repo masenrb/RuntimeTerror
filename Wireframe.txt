@@ -1,0 +1,57 @@
+Note: '** **' signs denote typed input.
+
+------------------------------------------------------------------------------
+
+
+Welcome to
+ _______  _______       ___          _______  .______       __    __    _______     _______  __  .__   __.  _______   _______ .______      
+|   ____||       \     /   \        |       \ |   _  \     |  |  |  |  /  _____|   |   ____||  | |  \ |  | |       \ |   ____||   _  \     
+|  |__   |  .--.  |   /  ^  \       |  .--.  ||  |_)  |    |  |  |  | |  |  __     |  |__   |  | |   \|  | |  .--.  ||  |__   |  |_)  |    
+|   __|  |  |  |  |  /  /_\  \      |  |  |  ||      /     |  |  |  | |  | |_ |    |   __|  |  | |  . `  | |  |  |  ||   __|  |      /     
+|  |     |  '--'  | /  _____  \     |  '--'  ||  |\  \----.|  `--'  | |  |__| |    |  |     |  | |  |\   | |  '--'  ||  |____ |  |\  \----.
+|__|     |_______/ /__/     \__\    |_______/ | _| `._____| \______/   \______|    |__|     |__| |__| \__| |_______/ |_______|| _| `._____|
+                                                                                                                                           
+
+This program allows you to find a summary of all the information related to a drug using FDA Data.
+
+Would you like to search using an AVL Tree or a Map? (A/M) **A**
+
+Please type the name of the drug you are looking for: **Advil**
+
+Searching...
+
+Found! Time needed : 1234 seconds.
+
+------------------------------------------------------------------------------
+
+Proprietary name:   		Advil
+Non-Proprietary name: 		Ibuprofen
+Requires Prescription:		No
+Dosage Form:			Coated Tablet
+Route:				Oral
+
+------------------------------------------------------------------------------
+
+Search Again? (Y/N)  **Y**
+
+Would you like to search using an AVL Tree or a Map? (A/M) **M**
+
+Please type the name of the drug you are looking for: **Mucinex**
+
+Searching...
+
+Found! Time needed : 5678 seconds.
+
+------------------------------------------------------------------------------
+
+Proprietary name:   		Mucinex
+Non-Proprietary name: 		Guaifenesin
+Requires Prescription:		No
+Dosage Form:			Extended Release Tablet
+Route:				Oral
+
+------------------------------------------------------------------------------
+
+Search Again? (Y/N) **N**
+
+Thank you for using FDA Drug Finder. Goodbye!
