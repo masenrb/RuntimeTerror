@@ -25,10 +25,12 @@ Found! Time needed : 1234 seconds.
 ------------------------------------------------------------------------------
 
 Proprietary name:   		Advil
-Non-Proprietary name: 		Ibuprofen
+Non-Proprietary names: 		Ibuprofen
+				Ibuprofen Sodium
 Requires Prescription:		No
 Dosage Form:			Coated Tablet
 Route:				Oral
+Approved Producers:		Pfizer Consumer Healthcare	
 
 ------------------------------------------------------------------------------
 
@@ -49,11 +51,10 @@ Non-Proprietary name: 		Guaifenesin
 Requires Prescription:		No
 Dosage Form:			Extended Release Tablet
 Route:				Oral
+Approved Producers:		Atlantic Biologicals Corps
 
 ------------------------------------------------------------------------------
 
 Search Again? (Y/N) **N**
 
 Thank you for using FDA Drug Finder. Goodbye!
-
-//added text for git testing
