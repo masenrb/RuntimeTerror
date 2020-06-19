@@ -55,6 +55,16 @@ Approved Producers:		Atlantic Biologicals Corps
 
 ------------------------------------------------------------------------------
 
+Search Again? (Y/N)  **Y**
+
+Would you like to search using an AVL Tree or a Map? (A/M) **M**
+
+Please type the name of the drug you are looking for: **ABCXYZ**
+
+Searching...
+
+Not Found. Time needed : 99999 seconds.
+
 Search Again? (Y/N) **N**
 
 Thank you for using FDA Drug Finder. Goodbye!
