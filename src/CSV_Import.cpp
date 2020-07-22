@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <sstream>
+#include "DrugData.h"
 using namespace std;
 
 vector< vector<string> > csvToMap(string filename)
