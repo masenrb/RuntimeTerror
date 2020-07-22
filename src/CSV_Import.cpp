@@ -40,7 +40,7 @@ vector< vector<string> > csvToMap(string filename)
 int main()
 {
     vector< vector<string> > output;
-    output = csvToMap("../RawData/Drugs_product (Shortened).csv");
+    output = csvToMap("../RawData/Drugs_product(Shortened).csv");
 
     // Outputs formatted data.
     for (int i = 0; i < output.size(); i++)

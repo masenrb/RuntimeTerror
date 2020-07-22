@@ -1,5 +1,10 @@
+# Vscode
 .vscode
+
+#Clion
 cmake-build-debug
 CMakeLists.txt
 .idea
+
+#.exe
 CSV_Import
