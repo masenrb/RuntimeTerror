@@ -6,7 +6,7 @@
 #include <sstream>
 using namespace std;
 
-vector<vector<string>> csvToMap(string filename)
+vector< vector<string> > csvToMap(string filename)
 {
     ifstream dataFile(filename);
 
@@ -16,7 +16,7 @@ vector<vector<string>> csvToMap(string filename)
         throw runtime_error("Data file could not be opened.");
     }
 
-    vector<vector<string>> final;
+    vector< vector<string> > final;
     string line;
     string curData;
 
@@ -39,8 +39,8 @@ vector<vector<string>> csvToMap(string filename)
 
 int main()
 {
-    vector<vector<string>> output;
-    output = csvToMap("RawData/Drugs_product (Shortened).csv");
+    vector< vector<string> > output;
+    output = csvToMap("../RawData/Drugs_product (Shortened).csv");
 
     // Outputs formatted data.
     for (int i = 0; i < output.size(); i++)
