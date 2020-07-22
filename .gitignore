@@ -8,4 +8,8 @@ CMakeLists.txt
 
 #.exe
 *.exe
-src/CSV_Import
+
+#Specific sequence to ignore files with no extension in src/ folder.
+src/*
+src/!*/
+src/!*.*
