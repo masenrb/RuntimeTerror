@@ -8,4 +8,4 @@ CMakeLists.txt
 
 #.exe
 *.exe
-src/!*.*
+src/CSV_Import
