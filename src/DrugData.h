@@ -48,13 +48,11 @@ struct DrugData
 
         if (prescription)
         {
-            cout << "Prescription: "
-                 << "Yes" << endl;
+            cout << "Prescription: Yes" << endl;
         }
         else
         {
-            cout << "Prescription: "
-                 << "No" << endl;
+            cout << "Prescription: No" << endl;
         }
 
         cout << "Dosage Form(s): ";
@@ -81,16 +79,6 @@ struct DrugData
             {
                 cout << route[i] << endl;
             }
-        }
-    }
-
-    void addData(vector<string> data, bool prescription){
-        if(data.size() == 4){
-            update_P_Name(data[0]);
-            update_NP_Name(data[1]);
-            addDosageForm(data[2]);
-            addRoute(data[3]);
-            updatePrescription(prescription);
         }
     }
 };
