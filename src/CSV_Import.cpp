@@ -7,7 +7,7 @@
 #include "DrugData.h"
 using namespace std;
 
-vector< vector<string> > csvToMap(string filename)
+vector<DrugData> csvToMap(string filename)
 {
     ifstream dataFile(filename);
 
@@ -17,40 +17,52 @@ vector< vector<string> > csvToMap(string filename)
         throw runtime_error("Data file could not be opened.");
     }
 
-    vector< vector<string> > final;
-    string line;
-    string curData;
+    vector<DrugData> final;
+    string line, curData;
+
+    // first makes sure to update prescription in the first iteration of the string stream bellow.
+    bool prescription, first;       
 
     // Reads every line in the CSV file.
     while (getline(dataFile, line))
     {
         stringstream lineStream(line);
+        
+        // Will store drug data required for the addData function.
         vector<string> lineData;
+        DrugData drug;
 
         // Reads every element of the CSV line.
+        first = true;
         while (getline(lineStream, curData, ','))
         {
-            lineData.push_back(curData);
+            if(first){
+                if (curData == "HUMAN PRESCRIPTION DRUG"){
+                    prescription = true;
+                }else{
+                    prescription = false;
+                }
+                first = false;
+            }else{
+                lineData.push_back(curData);
+            }
         }
 
-        final.push_back(lineData);
+        drug.addData(lineData, prescription);
+        final.push_back(drug);
     }
     return final;
 }
 
 int main()
 {
-    vector< vector<string> > output;
+    vector<DrugData> output;
     output = csvToMap("../RawData/Drugs_product(Shortened).csv");
 
     // Outputs formatted data.
     for (int i = 0; i < output.size(); i++)
     {
-        for (int j = 0; j < output[i].size(); j++)
-        {
-            cout << output[i][j] << " ";
-        }
-        cout << endl;
+        output[i].printDrug();
     }
     return 0;
 };
