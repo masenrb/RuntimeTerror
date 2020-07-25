@@ -11,16 +11,15 @@ struct Node
 class AVLTree
 {
 private:
-    /* data */
+    Node *root = nullptr;
+    
+    //Helper functions
+    Node* leftRotation(Node *node);
+    Node* rightRotation(Node *node);
+    Node* leftRightRotation(Node *node);
 public:
-    AVLTree(/* args */);
+    void insert(DrugData input);
+    AVLTree();
+    AVLTree(DrugData input);
     ~AVLTree();
 };
-
-AVLTree::AVLTree(/* args */)
-{
-}
-
-AVLTree::~AVLTree()
-{
-}
