@@ -1,22 +1,27 @@
 #pragma once
 #include "DrugData.h"
 
-struct Node
+struct AVLNode
 {
     DrugData drug;
-    Node *left = nullptr;
-    Node *right = nullptr;
+    AVLNode *left = nullptr;
+    AVLNode *right = nullptr;
+    int height = 1; //One indexed height
+
+    AVLNode(DrugData input);
 };
 
 class AVLTree
 {
 private:
-    Node *root = nullptr;
+    AVLNode *root = nullptr;
     
     //Helper functions
-    Node* leftRotation(Node *node);
-    Node* rightRotation(Node *node);
-    Node* leftRightRotation(Node *node);
+    AVLNode* leftRotation(AVLNode *node);
+    AVLNode* rightRotation(AVLNode *node);
+    AVLNode* leftRightRotation(AVLNode *node);
+
+    AVLNode* insertHelper(AVLNode *node, DrugData input);
 public:
     void insert(DrugData input);
     AVLTree();
