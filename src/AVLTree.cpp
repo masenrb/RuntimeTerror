@@ -1,5 +1,6 @@
 #include "AVLTree.h"
 #include <iostream>
+#include <algorithm>
 //Class definitions for AVL Tree
 
 //AVLNode constructor
@@ -8,7 +9,7 @@ AVLNode::AVLNode(DrugData input)
     drug = input;
     left = nullptr;
     right = nullptr;
-    height = 1;
+    height = 0;
 }
 
 //Rotations
@@ -19,6 +20,13 @@ AVLNode *AVLTree::leftRotation(AVLNode *node)
     AVLNode *grandChild = node->right->left;
     newParent->left = node;
     node->right = grandChild;
+
+    //Update Node Heights
+    newParent->height = std::max(newParent->left->height, newParent->right->height);
+    grandChild->height = std::max(grandChild->left->height, grandChild->right->height);
+    newParent->height++;
+    grandChild->height++;
+
     return newParent;
 }
 
@@ -29,6 +37,13 @@ AVLNode *AVLTree::rightRotation(AVLNode *node)
     AVLNode *grandChild = node->left->right;
     newParent->right = node;
     node->left = grandChild;
+
+    //Update Node Heights
+    newParent->height = std::max(newParent->left->height, newParent->right->height);
+    grandChild->height = std::max(grandChild->left->height, grandChild->right->height);
+    newParent->height++;
+    grandChild->height++;
+
     return newParent;
 }
 
@@ -63,10 +78,33 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     {
         node->right = insertHelper(node->right, input);
     }
-    //else //If the new drug duplicate then ignore it
-    //{
+    else //If the new drug duplicate then ignore it
+    {
+        return node;
+    }
+
+
+    //Update the hight of node as new node was added
+    node->height = std::max(node->left->height,node->right->height);
+    node->height++;
+
+    //Check for balance
+    int balanceFactor = node->left->height - node->right->height;
+
+    //R R nodes
+    if(balanceFactor < -1 && input.pName.compare(node->right->drug.pName) > 0)
+    {
+        return leftRotation(node);
+    }
+
+    //L L nodes
+    if(balanceFactor > 1 && input.pName.compare(node->left->drug.pName) < 0)
+    {
+        return rightRotation(node);
+    }
+
     return node;
-    //}
+
 }
 
 //Insert

@@ -6,7 +6,7 @@ struct AVLNode
     DrugData drug;
     AVLNode *left = nullptr;
     AVLNode *right = nullptr;
-    int height = 1; //One indexed height
+    int height = 0;
 
     AVLNode(DrugData input);
 };
@@ -20,6 +20,7 @@ private:
     AVLNode* leftRightRotation(AVLNode *node);
 
     AVLNode* insertHelper(AVLNode *node, DrugData input);
+    //int updateHeight(AVLNode *node)
 
 public:
     void insert(DrugData input);
