@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <iostream>
 using namespace std;
 
 //Header for the class that holds drug name along with additional drug data.

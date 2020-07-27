@@ -14,17 +14,22 @@ struct AVLNode
 class AVLTree
 {
 private:
-    AVLNode *root = nullptr;
-    
     //Helper functions
     AVLNode* leftRotation(AVLNode *node);
     AVLNode* rightRotation(AVLNode *node);
     AVLNode* leftRightRotation(AVLNode *node);
 
     AVLNode* insertHelper(AVLNode *node, DrugData input);
+
 public:
     void insert(DrugData input);
-    AVLTree();
-    AVLTree(DrugData input);
-    ~AVLTree();
+    // AVLTree();
+    // AVLTree(DrugData input);
+    // ~AVLTree();
+
+    //Debugging
+    void inorderTraversal(AVLNode *node);
+    
+    //Move to private after debugging
+    AVLNode *root = nullptr;
 };
