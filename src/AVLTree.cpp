@@ -9,7 +9,20 @@ AVLNode::AVLNode(DrugData input)
     drug = input;
     left = nullptr;
     right = nullptr;
-    height = 0;
+    height = 1;
+}
+
+int AVLTree::getHeight(AVLNode *node)
+{
+    if(node == nullptr)
+        return 0;
+    return node->height;
+}
+
+int AVLTree::getMaxHeight(AVLNode *node1,AVLNode *node2)
+{
+    int height = std::max(getHeight(node1),getHeight(node2));
+    return height;
 }
 
 //Rotations
@@ -22,10 +35,10 @@ AVLNode *AVLTree::leftRotation(AVLNode *node)
     node->right = grandChild;
 
     //Update Node Heights
-    newParent->height = std::max(newParent->left->height, newParent->right->height);
-    grandChild->height = std::max(grandChild->left->height, grandChild->right->height);
+    newParent->height = getMaxHeight(newParent->left,newParent->right);
+    node->height = getMaxHeight(node->left,node->right);
     newParent->height++;
-    grandChild->height++;
+    node->height++;
 
     return newParent;
 }
@@ -39,10 +52,10 @@ AVLNode *AVLTree::rightRotation(AVLNode *node)
     node->left = grandChild;
 
     //Update Node Heights
-    newParent->height = std::max(newParent->left->height, newParent->right->height);
-    grandChild->height = std::max(grandChild->left->height, grandChild->right->height);
+    newParent->height = getMaxHeight(newParent->left,newParent->right);
+    node->height = getMaxHeight(node->left,node->right);
     newParent->height++;
-    grandChild->height++;
+    node->height++;
 
     return newParent;
 }
@@ -51,13 +64,26 @@ AVLNode *AVLTree::leftRightRotation(AVLNode *node)
 {
     //Don't preform operations if empty tree
     if (node != nullptr)
-        return;
+        return nullptr;
 
     //Right rotate right node
-    node->right = leftRotation(node->right);
+    node->left = leftRotation(node->left);
 
     //Left rotate
     return rightRotation(node);
+}
+
+AVLNode *AVLTree::rightLeftRotation(AVLNode *node)
+{
+    //Don't preform operations if empty tree
+    if (node != nullptr)
+        return nullptr;
+
+    //Right rotate right node
+    node->right = rightRotation(node->right);
+
+    //Left rotate
+    return leftRotation(node);
 }
 
 //Insert Helper Functions
@@ -70,11 +96,13 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     }
 
     //if node isn't null then compare with children to determine placement
-    if (input.pName.compare(node->drug.pName) < 0) //If new drug is alpha before node
+    int alphaCompare = input.pName.compare(node->drug.pName);
+ 
+    if (alphaCompare > 0) //If new drug is alpha before node
     {
         node->left = insertHelper(node->left, input);
     }
-    else if (input.pName.compare(node->drug.pName) > 0) //If new drug is alpha after node
+    else if (alphaCompare < 0) //If new drug is alpha after node
     {
         node->right = insertHelper(node->right, input);
     }
@@ -83,28 +111,39 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
         return node;
     }
 
-
     //Update the hight of node as new node was added
-    node->height = std::max(node->left->height,node->right->height);
+    node->height = getMaxHeight(node->right,node->left);
     node->height++;
 
     //Check for balance
-    int balanceFactor = node->left->height - node->right->height;
-
+    int balanceFactor = getHeight(node->left) - getHeight(node->right);
+    
     //R R nodes
-    if(balanceFactor < -1 && input.pName.compare(node->right->drug.pName) > 0)
+    if(balanceFactor < -1 && alphaCompare < 0)
     {
         return leftRotation(node);
     }
 
     //L L nodes
-    if(balanceFactor > 1 && input.pName.compare(node->left->drug.pName) < 0)
+    if(balanceFactor > 1 && alphaCompare > 0)
     {
         return rightRotation(node);
     }
 
-    return node;
+    // //R L nodes
+    // if(balanceFactor < -1 && input.pName.compare(node->right->drug.pName) < 0)
+    // {
+    //     return rightLeftRotation(node);
+    // }
 
+    // //L R nodes
+    // if(balanceFactor > 1 && input.pName.compare(node->left->drug.pName) > 0)
+    // {
+    //     return leftRightRotation(node);
+    // }
+
+    //Return root pointer
+    return node;
 }
 
 //Insert
@@ -134,9 +173,10 @@ int main()
     b.pName = "b";
     c.pName = "c";
 
-    tree.insert(a);
-    tree.insert(b);
     tree.insert(c);
+    tree.insert(b);
+    tree.insert(a);
+
 
     tree.inorderTraversal(tree.root);
 
