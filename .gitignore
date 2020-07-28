@@ -10,6 +10,6 @@ CMakeLists.txt
 *.exe
 
 #Specific sequence to ignore files with no extension in src/ folder.
-src/*
-src/!*/
-src/!*.*
+#src/*
+#src/!*/
+#src/!*.*
