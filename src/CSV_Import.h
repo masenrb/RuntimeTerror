@@ -44,24 +44,24 @@ vector<DrugData> csvToDrugData(string filename)
             {
                 if (curData == "HUMAN PRESCRIPTION DRUG")
                 {
-                    drug.updatePrescription(true);
+                    drug.prescription = true;
                 }
                 else
                 {
-                    drug.updatePrescription(false);
+                    drug.prescription = false;
                 }
                 break;
             }
             // Handles Proprietary Name.
             case 2:
             {
-                drug.update_P_Name(curData);
+                drug.pName = curData;
                 break;
             }
             // Handles Non Proprietary Name.
             case 3:
             {
-                drug.update_NP_Name(curData);
+                drug.npNames.push_back(curData);
                 break;
             }
             // Handles all Dosage Forms.
@@ -71,7 +71,7 @@ vector<DrugData> csvToDrugData(string filename)
                 string curDosage;
                 while (getline(dosageStream, curDosage, '-'))
                 {
-                    drug.addDosageForm(curDosage);
+                    drug.forms.push_back(curDosage);
                 }
                 break;
             }
@@ -82,8 +82,13 @@ vector<DrugData> csvToDrugData(string filename)
                 string curRoute;
                 while (getline(routeStream, curRoute, '-'))
                 {
-                    drug.addRoute(curRoute);
+                    drug.routes.push_back(curRoute);
                 }
+                break;
+            }
+            case 6:
+            {
+                drug.providers.push_back(curData);
                 break;
             }
             }

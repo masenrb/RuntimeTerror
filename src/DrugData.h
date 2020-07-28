@@ -5,46 +5,28 @@ using namespace std;
 //Header for the class that holds drug name along with additional drug data.
 struct DrugData
 {
-    string pName;         //Proprietary name
-    string npName;        //Non-Proprietary names
-    bool prescription;    //Requires Prescription
-    vector<string> form;  //Dosage Form
-    vector<string> route; //Approved Producers
-
-    DrugData()
-    {
-        prescription = false;
-    }
-
-    void update_P_Name(string pName)
-    {
-        this->pName = pName;
-    }
-
-    void update_NP_Name(string npName)
-    {
-        this->npName = npName;
-    }
-
-    void updatePrescription(bool input)
-    {
-        prescription = input;
-    }
-
-    void addDosageForm(string dosage)
-    {
-        form.push_back(dosage);
-    }
-
-    void addRoute(string route)
-    {
-        this->route.push_back(route);
-    }
+    string pName;                   //Proprietary name
+    vector<string> npNames;          //Non-Proprietary names
+    bool prescription;              //Requires Prescription
+    vector<string> forms;            //Dosage Form
+    vector<string> routes;           //Routes
+    vector<string> providers;        //Approved Producers
 
     void printDrug()
     {
         cout << "Proprietary Name: " << pName << endl;
-        cout << "Non Proprietary Name: " << npName << endl;
+        cout << "Non-Proprietary Name(s): ";
+        for (int i = 0; i < npNames.size(); i++)
+        {
+            if (i != (npNames.size() - 1))
+            {
+                cout << npNames[i] << ", ";
+            }
+            else
+            {
+                cout << npNames[i] << endl;
+            }
+        }
 
         if (prescription)
         {
@@ -56,28 +38,28 @@ struct DrugData
         }
 
         cout << "Dosage Form(s): ";
-        for (int i = 0; i < form.size(); i++)
+        for (int i = 0; i < forms.size(); i++)
         {
-            if (i != (form.size() - 1))
+            if (i != (forms.size() - 1))
             {
-                cout << form[i] << ", ";
+                cout << forms[i] << ", ";
             }
             else
             {
-                cout << form[i] << endl;
+                cout << forms[i] << endl;
             }
         }
 
         cout << "Route(s): ";
-        for (int i = 0; i < route.size(); i++)
+        for (int i = 0; i < routes.size(); i++)
         {
-            if (i != (route.size() - 1))
+            if (i != (routes.size() - 1))
             {
-                cout << route[i] << ", ";
+                cout << routes[i] << ", ";
             }
             else
             {
-                cout << route[i] << endl;
+                cout << routes[i] << endl;
             }
         }
     }
