@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void DrugData::mergeDrug(DrugData drug){
+void DrugData::mergeDrug(DrugData &drug){
     bool found = false;
 
     //Adds Non Proprietary Names that are not found in the destination drug.

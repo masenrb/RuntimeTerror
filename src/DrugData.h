@@ -14,7 +14,7 @@ struct DrugData
     vector<string> routes;           //Routes
     vector<string> providers;        //Approved Producers
 
-    void mergeDrug(DrugData drug);
+    void mergeDrug(DrugData &drug);
     void printDrug();
     
 };
