@@ -93,11 +93,3 @@ vector<DrugData> csvToDrugData(string filename)
     }
     return final;
 }
-
-int main(){
-    vector <DrugData> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
-    for(int i = 0; i < test.size(); i++){
-        test[i].printDrug();
-    }
-    return 0;
-}
