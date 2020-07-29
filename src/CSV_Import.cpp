@@ -1,7 +1,7 @@
 #include "CSV_Import.h"
 using namespace std;
 
-vector<DrugData*> csvToDrugData(string filename)
+vector<DrugData> csvToDrugData(string filename)
 {
     ifstream dataFile(filename);
 
@@ -11,7 +11,7 @@ vector<DrugData*> csvToDrugData(string filename)
         throw runtime_error("Data file could not be opened.");
     }
 
-    vector<DrugData*> final;
+    vector<DrugData> final;
     string line, curData;
 
     // Counter lets us know which data value we are currenlty on.
@@ -23,7 +23,7 @@ vector<DrugData*> csvToDrugData(string filename)
     {
         // Sets up variables we will be needing to store the data.
         stringstream lineStream(line);
-        DrugData *drug = new DrugData;
+        DrugData drug;
 
         // Resets on every loop.
         counter = 1;
@@ -38,24 +38,24 @@ vector<DrugData*> csvToDrugData(string filename)
             {
                 if (curData == "HUMAN PRESCRIPTION DRUG")
                 {
-                    (*drug).prescription = true;
+                    drug.prescription = true;
                 }
                 else
                 {
-                    (*drug).prescription = false;
+                    drug.prescription = false;
                 }
                 break;
             }
             // Handles Proprietary Name.
             case 2:
             {
-                (*drug).pName = curData;
+                drug.pName = curData;
                 break;
             }
             // Handles Non Proprietary Name.
             case 3:
             {
-                (*drug).npNames.push_back(curData);
+                drug.npNames.push_back(curData);
                 break;
             }
             // Handles all Dosage Forms.
@@ -65,7 +65,7 @@ vector<DrugData*> csvToDrugData(string filename)
                 string curDosage;
                 while (getline(dosageStream, curDosage, '-'))
                 {
-                    (*drug).forms.push_back(curDosage);
+                    drug.forms.push_back(curDosage);
                 }
                 break;
             }
@@ -76,14 +76,14 @@ vector<DrugData*> csvToDrugData(string filename)
                 string curRoute;
                 while (getline(routeStream, curRoute, '-'))
                 {
-                    (*drug).routes.push_back(curRoute);
+                    drug.routes.push_back(curRoute);
                 }
                 break;
             }
             // Handles all Providers.
             case 6:
             {
-                (*drug).providers.push_back(curData);
+                drug.providers.push_back(curData);
                 break;
             }
             }
@@ -95,9 +95,9 @@ vector<DrugData*> csvToDrugData(string filename)
 }
 
 int main(){
-    vector <DrugData*> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
+    vector <DrugData> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
     for(int i = 0; i < test.size(); i++){
-        (*test[i]).printDrug();
+        test[i].printDrug();
     }
     return 0;
 }

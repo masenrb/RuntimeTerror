@@ -9,4 +9,4 @@
 #include "DrugData.cpp"
 using namespace std;
 
-vector<DrugData*> csvToDrugData(string filename);
+vector<DrugData> csvToDrugData(string filename);
