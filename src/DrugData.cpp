@@ -2,6 +2,10 @@
 #include <iostream>
 using namespace std;
 
+DrugData::DrugData() {
+    prescription = false;
+}
+
 void DrugData::mergeDrug(DrugData &drug){
     bool found = false;
 
