@@ -6,18 +6,18 @@ void DrugData::mergeDrug(DrugData &drug){
     bool found = false;
 
     //Adds Non Proprietary Names that are not found in the destination drug.
-    for(int i = 0; i < drug.npNames.size(); i++){
-        for(int j = 0; j < this->npNames.size(); i++){
-            if(drug.npNames[i] == this->npNames[i]){
+    for(auto & npName : drug.npNames){
+        for(auto & j : this->npNames){
+            if(npName == j){
                 found = true;
             }
         }
         if(!found){
-            this->npNames.push_back(drug.npNames[i]);
+            this->npNames.push_back(npName);
         }
     }
 
-    // If either drug needs a presecription the merged one will too.
+    // If either drug needs a prescription the merged one will too.
     if(this->prescription || drug.prescription){
         this->prescription = true;
     }
@@ -25,42 +25,42 @@ void DrugData::mergeDrug(DrugData &drug){
     //Adds Forms that are not found in the destination drug.
     found = false;
 
-    for(int i = 0; i < drug.forms.size(); i++){
-        for(int j = 0; j < this->forms.size(); i++){
-            if(drug.forms[i] == this->forms[i]){
+    for(auto & form : drug.forms){
+        for(auto & j : this->forms){
+            if(form == j){
                 found = true;
             }
         }
         if(!found){
-            this->forms.push_back(drug.forms[i]);
+            this->forms.push_back(form);
         }
     }
 
     //Adds Routes that are not found in the destination drug.
     found = false;
 
-    for(int i = 0; i < drug.routes.size(); i++){
-        for(int j = 0; j < this->routes.size(); i++){
-            if(drug.routes[i] == this->routes[i]){
+    for(auto & route : drug.routes){
+        for(auto & j : this->routes){
+            if(route == j){
                 found = true;
             }
         }
         if(!found){
-            this->routes.push_back(drug.routes[i]);
+            this->routes.push_back(route);
         }
     }
 
     //Adds Providers that are not found in the destination drug.
     found = false;
 
-    for(int i = 0; i < drug.providers.size(); i++){
-        for(int j = 0; j < this->providers.size(); i++){
-            if(drug.providers[i] == this->providers[i]){
+    for(auto & provider : drug.providers){
+        for(auto & j : this->providers){
+            if(provider == j){
                 found = true;
             }
         }
         if(!found){
-            this->providers.push_back(drug.providers[i]);
+            this->providers.push_back(provider);
         }
     }
 }
