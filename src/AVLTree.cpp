@@ -3,8 +3,8 @@
 #include <algorithm>
 //Class definitions for AVL Tree
 //DEBUGGING
-#include<queue>
-#include<vector>
+#include <queue>
+#include <vector>
 
 //AVLNode constructor
 AVLNode::AVLNode(DrugData input)
@@ -12,20 +12,15 @@ AVLNode::AVLNode(DrugData input)
     drug = input;
     left = nullptr;
     right = nullptr;
-    height = 1;
 }
 
-int AVLTree::getHeight(AVLNode *node)
+int AVLTree::height(AVLNode *node)
 {
-    if(node == nullptr)
+    if (node == nullptr)
         return 0;
-    return node->height;
-}
-
-int AVLTree::getMaxHeight(AVLNode *node1,AVLNode *node2)
-{
-    int height = std::max(getHeight(node1),getHeight(node2));
-    return height;
+    int leftHeight = height(node->left);
+    int rightHeight = height(node->right);
+    return 1 + std::max(leftHeight, rightHeight);
 }
 
 //Rotations
@@ -37,12 +32,6 @@ AVLNode *AVLTree::leftRotation(AVLNode *node)
     newParent->left = node;
     node->right = grandChild;
 
-    //Update Node Heights
-    newParent->height = getMaxHeight(newParent->left,newParent->right);
-    node->height = getMaxHeight(node->left,node->right);
-    newParent->height++;
-    node->height++;
-
     return newParent;
 }
 
@@ -53,12 +42,6 @@ AVLNode *AVLTree::rightRotation(AVLNode *node)
     AVLNode *grandChild = node->left->right;
     newParent->right = node;
     node->left = grandChild;
-
-    //Update Node Heights
-    newParent->height = getMaxHeight(newParent->left,newParent->right);
-    node->height = getMaxHeight(node->left,node->right);
-    newParent->height++;
-    node->height++;
 
     return newParent;
 }
@@ -99,8 +82,8 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     }
 
     //if node isn't null then compare with children to determine placement
-    int alphaCompare = input.pName.compare(node->drug.pName);
- 
+    int alphaCompare = node->drug.pName.compare(input.pName);
+
     if (alphaCompare > 0) //If new drug is alpha before node
     {
         node->left = insertHelper(node->left, input);
@@ -114,36 +97,32 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
         return node;
     }
 
-    //Update the hight of node as new node was added
-    node->height = getMaxHeight(node->right,node->left);
-    node->height++;
-
     //Check for balance
-    int balanceFactor = getHeight(node->left) - getHeight(node->right);
-    
+    int balanceFactor = height(node->left) - height(node->right);
+
     //R R nodes
-    if(balanceFactor < -1 && alphaCompare < 0)
+    if (balanceFactor < -1 && alphaCompare < 0)
     {
         return leftRotation(node);
     }
 
     //L L nodes
-    if(balanceFactor > 1 && alphaCompare > 0)
+    if (balanceFactor > 1 && alphaCompare > 0)
     {
         return rightRotation(node);
     }
 
-     //R L nodes
-     if(balanceFactor < -1 && alphaCompare > 0)
-     {
-         return rightLeftRotation(node);
-     }
+    //R L nodes
+    if (balanceFactor < -1 && alphaCompare > 0)
+    {
+        return rightLeftRotation(node);
+    }
 
-     //L R nodes
-     if(balanceFactor > 1 && alphaCompare < 0)
-     {
-         return leftRightRotation(node);
-     }
+    //L R nodes
+    if (balanceFactor > 1 && alphaCompare < 0)
+    {
+        return leftRightRotation(node);
+    }
 
     //Return root pointer
     return node;
@@ -157,27 +136,27 @@ void AVLTree::insert(DrugData drug)
 }
 
 //Debugging
-void AVLTree::levelOrder(AVLNode* root) 
+void AVLTree::levelOrder(AVLNode *root)
 {
     if (root != nullptr)
-    {   
-        queue<AVLNode*> queue;
+    {
+        queue<AVLNode *> queue;
         int levelnum = 1;
         queue.push(root);
 
-        while(!queue.empty())
+        while (!queue.empty())
         {
-            int qSize = queue.size(); //Keeping a consitant size 
+            int qSize = queue.size(); //Keeping a consitant size
             vector<std::string> level;
-            for(int i = 0; i < qSize; i++)
+            for (int i = 0; i < qSize; i++)
             {
-                AVLNode* temp = queue.front(); //Looking at the first node in the queue
+                AVLNode *temp = queue.front();     //Looking at the first node in the queue
                 level.push_back(temp->drug.pName); //Adding it's value to the level list
-                queue.pop();                 //Removing first in queue node
-                
-                if(temp->left != nullptr)
+                queue.pop();                       //Removing first in queue node
+
+                if (temp->left != nullptr)
                     queue.push(temp->left);
-                if(temp->right != nullptr)
+                if (temp->right != nullptr)
                     queue.push(temp->right);
             }
 
@@ -219,6 +198,7 @@ int main()
     tree.insert(d);
     tree.insert(e);
     tree.insert(f);
+    //tree.insert(c);
 
     cout << "Level Order:" << endl;
     tree.levelOrder(tree.root);
