@@ -4,7 +4,6 @@
 //Class definitions for AVL Tree
 //DEBUGGING
 #include <queue>
-#include <vector>
 
 //AVLNode constructor
 AVLNode::AVLNode(DrugData input)
@@ -23,6 +22,12 @@ AVLTree::AVLTree() //Mostly empty constructor
 AVLTree::~AVLTree()
 {
     deleteTree(root); //Delete the tree starting at the root
+
+    //Delete all returned pointers
+    for (int i = 0; i < dataPointers.size(); i++)
+    {
+        delete dataPointers[i];
+    }
 }
 
 int AVLTree::alphaCompare(AVLNode *node, DrugData input)
@@ -148,11 +153,40 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     return node;
 }
 
+AVLNode *AVLTree::searchHelper(AVLNode *node, string name)
+{
+    if(node == nullptr || node->drug.pName.compare(name) == 0)
+        return node;
+    else if(node->drug.pName.compare(name) > 0)
+        return searchHelper(node->left, name);
+    else
+        return searchHelper(node->right, name);
+}
+
 //Insert
 void AVLTree::insert(DrugData drug)
 {
     //Call recursive insertHelper with node starting at the top
     root = insertHelper(root, drug);
+}
+
+//Search
+DrugData *AVLTree::search(string name)
+{
+    AVLNode *returnNode = searchHelper(root,name);
+
+    //If node is not found return nullptr
+    if(returnNode == nullptr)
+        return nullptr;
+
+    //Returning pointer to Drugdata class
+    DrugData *returnDrugData = new DrugData(returnNode->drug);
+
+    //Place in vector for later deletion
+    dataPointers.push_back(returnDrugData);
+
+    //Return new pointer
+    return returnDrugData;
 }
 
 //Debugging
@@ -238,5 +272,18 @@ int main()
     tree.inorderTraversal(tree.root);
 
     cout << "Root: " << tree.root->drug.pName << endl;
+
+
+    DrugData *test = tree.search("j");
+
+    if (test == nullptr)
+    {
+        cout << "Was not Found!" << endl;
+    }
+    else
+    {
+        cout << "Found!" << endl;
+    }
+    
     return 0;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "DrugData.h"
+#include <vector>
 
 struct AVLNode
 {
@@ -24,11 +25,16 @@ private:
 
     //Recursive Helper Functions
     AVLNode* insertHelper(AVLNode *node, DrugData input);
+    AVLNode* searchHelper(AVLNode *node, string name);
     int height(AVLNode* node);
     void deleteTree(AVLNode *node);
 
+    //Vector to keep track of data pointers
+    vector<DrugData *> dataPointers;
+
 public:
     void insert(DrugData input);
+    DrugData* search(string name);
     AVLTree();
     ~AVLTree();
 
