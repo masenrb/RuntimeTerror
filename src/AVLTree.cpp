@@ -2,6 +2,9 @@
 #include <iostream>
 #include <algorithm>
 //Class definitions for AVL Tree
+//DEBUGGING
+#include<queue>
+#include<vector>
 
 //AVLNode constructor
 AVLNode::AVLNode(DrugData input)
@@ -130,17 +133,17 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
         return rightRotation(node);
     }
 
-    // //R L nodes
-    // if(balanceFactor < -1 && input.pName.compare(node->right->drug.pName) < 0)
-    // {
-    //     return rightLeftRotation(node);
-    // }
+     //R L nodes
+     if(balanceFactor < -1 && alphaCompare > 0)
+     {
+         return rightLeftRotation(node);
+     }
 
-    // //L R nodes
-    // if(balanceFactor > 1 && input.pName.compare(node->left->drug.pName) > 0)
-    // {
-    //     return leftRightRotation(node);
-    // }
+     //L R nodes
+     if(balanceFactor > 1 && alphaCompare < 0)
+     {
+         return leftRightRotation(node);
+     }
 
     //Return root pointer
     return node;
@@ -154,6 +157,41 @@ void AVLTree::insert(DrugData drug)
 }
 
 //Debugging
+void AVLTree::levelOrder(AVLNode* root) 
+{
+    if (root != nullptr)
+    {   
+        queue<AVLNode*> queue;
+        int levelnum = 1;
+        queue.push(root);
+
+        while(!queue.empty())
+        {
+            int qSize = queue.size(); //Keeping a consitant size 
+            vector<std::string> level;
+            for(int i = 0; i < qSize; i++)
+            {
+                AVLNode* temp = queue.front(); //Looking at the first node in the queue
+                level.push_back(temp->drug.pName); //Adding it's value to the level list
+                queue.pop();                 //Removing first in queue node
+                
+                if(temp->left != nullptr)
+                    queue.push(temp->left);
+                if(temp->right != nullptr)
+                    queue.push(temp->right);
+            }
+
+            cout << "Level: " << levelnum << endl;
+            for (int i = 0; i < level.size(); i++)
+            {
+                cout << level[i] << " ";
+            }
+            cout << endl;
+            levelnum++;
+        }
+    }
+}
+
 void AVLTree::inorderTraversal(AVLNode *node)
 {
     if (node != nullptr)
@@ -168,17 +206,25 @@ int main()
 {
     AVLTree tree;
 
-    DrugData a, b, c;
+    DrugData a, b, c, d, e, f;
     a.pName = "a";
     b.pName = "b";
     c.pName = "c";
+    d.pName = "d";
+    e.pName = "e";
+    f.pName = "f";
 
-    tree.insert(c);
-    tree.insert(b);
     tree.insert(a);
+    tree.insert(b);
+    tree.insert(d);
+    tree.insert(e);
+    tree.insert(f);
 
+    cout << "Level Order:" << endl;
+    tree.levelOrder(tree.root);
+    cout << endl;
 
+    cout << "Inorder Traversal:" << endl;
     tree.inorderTraversal(tree.root);
-
     return 0;
 }

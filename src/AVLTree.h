@@ -31,8 +31,8 @@ public:
     // ~AVLTree();
 
     //Debugging
+    void levelOrder(AVLNode* root);
     void inorderTraversal(AVLNode *node);
-    
     //Move to private after debugging
     AVLNode *root = nullptr;
 };
