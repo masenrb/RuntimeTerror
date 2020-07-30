@@ -14,6 +14,7 @@ void DrugData::mergeDrug(DrugData &drug)
     //Adds Non Proprietary Names that are not found in the destination drug.
     for (auto &npName : drug.npNames)
     {
+        found = false;
         for (auto &j : this->npNames)
         {
             if (npName == j)
@@ -34,10 +35,10 @@ void DrugData::mergeDrug(DrugData &drug)
     }
 
     //Adds Forms that are not found in the destination drug.
-    found = false;
 
     for (auto &form : drug.forms)
     {
+        found = false;
         for (auto &j : this->forms)
         {
             if (form == j)
@@ -52,10 +53,10 @@ void DrugData::mergeDrug(DrugData &drug)
     }
 
     //Adds Routes that are not found in the destination drug.
-    found = false;
 
     for (auto &route : drug.routes)
     {
+        found = false;
         for (auto &j : this->routes)
         {
             if (route == j)
@@ -70,10 +71,10 @@ void DrugData::mergeDrug(DrugData &drug)
     }
 
     //Adds Providers that are not found in the destination drug.
-    found = false;
 
     for (auto &provider : drug.providers)
     {
+        found = false;
         for (auto &j : this->providers)
         {
             if (provider == j)
