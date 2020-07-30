@@ -11,7 +11,7 @@ const int NUM_DATA_ROWS = 100;
 MapNode::MapNode(string key, DrugData *value){
     this->key = key;
     this->value = value;
-    this->next = NULL;
+    this->next = nullptr;
 }
 
 string MapNode::getKey(){
@@ -31,11 +31,11 @@ void MapNode::setNextNode(MapNode *next){
 }
 
 HashMap::HashMap(){
-    map = vector<MapNode*>( (int) (NUM_DATA_ROWS / LOAD_CAPACITY), NULL);
+    map = vector<MapNode*>( (int) (NUM_DATA_ROWS / LOAD_CAPACITY), nullptr);
 }
 
 HashMap::HashMap(vector<DrugData> importDrugs){
-    map = vector<MapNode*>( (int) (importDrugs.size() / LOAD_CAPACITY), NULL);
+    map = vector<MapNode*>( (int) (importDrugs.size() / LOAD_CAPACITY), nullptr);
     for(int i = 0; i < importDrugs.size(); i++){
         addNode(importDrugs[i].pName,importDrugs[i]);
     }
@@ -43,9 +43,9 @@ HashMap::HashMap(vector<DrugData> importDrugs){
 
 HashMap::~HashMap(){
     for(int i = 0; i < map.size(); i++){
-        if(map[i] != NULL){
+        if(map[i] != nullptr){
             MapNode *nextNode = map[i];
-            while(nextNode != NULL){
+            while(nextNode != nullptr){
                 MapNode *prevNode = nextNode;
                 nextNode = (*nextNode).getNextNode();
                 delete (*prevNode).getValue();
@@ -76,14 +76,14 @@ void HashMap::addNode(string key, DrugData value){
     (*newDrug).pName = key;
     MapNode *newNode = new MapNode(key, newDrug);
 
-    if(map[hashValue] == NULL){
+    if(map[hashValue] == nullptr){
         map[hashValue] = newNode;
     }else{
         MapNode *tempNode = map[hashValue];
-        while((*tempNode).getNextNode() != NULL && (*(*tempNode).getNextNode()).getKey() != key){
+        while((*tempNode).getNextNode() != nullptr && (*(*tempNode).getNextNode()).getKey() != key){
             tempNode = (*tempNode).getNextNode();
         }
-        if((*tempNode).getNextNode() == NULL){
+        if((*tempNode).getNextNode() == nullptr){
             (*tempNode).setNextNode(newNode);
         }else{
             MapNode *initialNode = (*tempNode).getNextNode();
@@ -95,14 +95,14 @@ void HashMap::addNode(string key, DrugData value){
 void HashMap::deleteNode(string key){
     int hashValue = hashFunction(key);
 
-    if(map[hashValue] != NULL){
+    if(map[hashValue] != nullptr){
         MapNode *tempNode = map[hashValue];
         MapNode *prevNode = tempNode;
-        while(tempNode != NULL){
+        while(tempNode != nullptr){
             if((*tempNode).getKey() == key){
                 if(tempNode == prevNode){
                     delete tempNode;
-                    map[hashValue] = NULL;
+                    map[hashValue] = nullptr;
                 }else{
                     (*prevNode).setNextNode((*tempNode).getNextNode());
                     delete tempNode;
@@ -118,19 +118,19 @@ void HashMap::deleteNode(string key){
 DrugData *HashMap::getData(string key){
     int hashValue = hashFunction(key);
 
-    if(map[hashValue] != NULL){
+    if(map[hashValue] != nullptr){
         MapNode *tempNode = map[hashValue];
-        while(tempNode != NULL){
+        while(tempNode != nullptr){
             if((*tempNode).getKey() == key){
                 return (*tempNode).getValue();
             }
             tempNode = (*tempNode).getNextNode();
         }
         cout << "Not Found!" << endl;
-        return NULL;
+        return nullptr;
     }else{
         cout << "Not Found!" << endl;
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -138,8 +138,10 @@ int main(){
     vector <DrugData> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
 
     HashMap newMap = HashMap(test);
-    
-    newMap.getData("ELIQUIS")->printDrug();
+
+    if(newMap.getData("test") != nullptr){
+        newMap.getData("test")->printDrug();
+    }
 
     return 0;
 }
