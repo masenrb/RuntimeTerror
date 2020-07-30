@@ -1,10 +1,14 @@
 #include "HashMap.h"
-#include <math.h>
+#include <cmath>
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
 
 const float LOAD_CAPACITY = .67;
-const int NUM_DATA_ROWS = 115138;
+const int NUM_DATA_ROWS = 100;
 
-MapNode::MapNode(string key, DrugData value){
+MapNode::MapNode(string key, DrugData *value){
     this->key = key;
     this->value = value;
     this->next = NULL;
@@ -14,7 +18,7 @@ string MapNode::getKey(){
     return key;
 }
 
-DrugData MapNode::getValue(){
+DrugData *MapNode::getValue(){
     return value;
 }
 
@@ -26,12 +30,15 @@ void MapNode::setNextNode(MapNode *next){
     this->next = next;
 }
 
-void MapNode::setValue(DrugData value){
-    this->value = value;
+HashMap::HashMap(){
+    map = vector<MapNode*>( (int) (NUM_DATA_ROWS / LOAD_CAPACITY), NULL);
 }
 
-HashMap::HashMap(int numDataRows, float loadCapacity){
-    map = vector<MapNode*>( (int) (numDataRows / loadCapacity), NULL);
+HashMap::HashMap(vector<DrugData> importDrugs){
+    map = vector<MapNode*>( (int) (importDrugs.size() / LOAD_CAPACITY), NULL);
+    for(int i = 0; i < importDrugs.size(); i++){
+        addNode(importDrugs[i].pName,importDrugs[i]);
+    }
 }
 
 HashMap::~HashMap(){
@@ -41,6 +48,7 @@ HashMap::~HashMap(){
             while(nextNode != NULL){
                 MapNode *prevNode = nextNode;
                 nextNode = (*nextNode).getNextNode();
+                delete (*prevNode).getValue();
                 delete prevNode;
             }
         }
@@ -50,19 +58,23 @@ HashMap::~HashMap(){
 int HashMap::hashFunction(string key){
     const int power = 31;
     int counter = 0;
-    long hashValue = 0;
+    long long hashValue = 0;
     for (char c : key){
-        hashValue = hashValue + (c - 'a' + 1) * pow(power, counter);
+        hashValue = hashValue + c * pow(power, counter);
         counter++;
     }
+    int final = abs(hashValue % ((int) (NUM_DATA_ROWS/LOAD_CAPACITY)));
 
-    return hashValue % ((int) (NUM_DATA_ROWS/LOAD_CAPACITY));
+    return final;
 }
 
 void HashMap::addNode(string key, DrugData value){
     int hashValue = hashFunction(key);
 
-    MapNode *newNode = new MapNode(key, value);
+    DrugData *newDrug = new DrugData;
+    (*newDrug).mergeDrug(value);
+    (*newDrug).pName = key;
+    MapNode *newNode = new MapNode(key, newDrug);
 
     if(map[hashValue] == NULL){
         map[hashValue] = newNode;
@@ -75,7 +87,59 @@ void HashMap::addNode(string key, DrugData value){
             (*tempNode).setNextNode(newNode);
         }else{
             MapNode *initialNode = (*tempNode).getNextNode();
-            (*initialNode).getValue().mergeDrug(value);
+            (*(*initialNode).getValue()).mergeDrug(value);
         }
     }
+}
+
+void HashMap::deleteNode(string key){
+    int hashValue = hashFunction(key);
+
+    if(map[hashValue] != NULL){
+        MapNode *tempNode = map[hashValue];
+        MapNode *prevNode = tempNode;
+        while(tempNode != NULL){
+            if((*tempNode).getKey() == key){
+                if(tempNode == prevNode){
+                    delete tempNode;
+                    map[hashValue] = NULL;
+                }else{
+                    (*prevNode).setNextNode((*tempNode).getNextNode());
+                    delete tempNode;
+                }
+                break;
+            }
+            prevNode = tempNode;
+            tempNode = (*tempNode).getNextNode();
+        }
+    }
+}
+
+DrugData *HashMap::getData(string key){
+    int hashValue = hashFunction(key);
+
+    if(map[hashValue] != NULL){
+        MapNode *tempNode = map[hashValue];
+        while(tempNode != NULL){
+            if((*tempNode).getKey() == key){
+                return (*tempNode).getValue();
+            }
+            tempNode = (*tempNode).getNextNode();
+        }
+        cout << "Not Found!" << endl;
+        return NULL;
+    }else{
+        cout << "Not Found!" << endl;
+        return NULL;
+    }
+}
+
+int main(){
+    vector <DrugData> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
+
+    HashMap newMap = HashMap(test);
+    
+    newMap.getData("ELIQUIS")->printDrug();
+
+    return 0;
 }

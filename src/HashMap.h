@@ -1,29 +1,32 @@
 #pragma once
 #include "DrugData.h"
+#include "CSV_Import.cpp"
 
 class MapNode{
 private:
     string key;
-    DrugData value;
+    DrugData *value;
     MapNode *next;
 
 public:
-    MapNode(string key, DrugData value);
+    MapNode(string key, DrugData *value);
     string getKey();
-    DrugData getValue();
+    DrugData *getValue();
     MapNode *getNextNode();
     void setNextNode(MapNode *next);
-    void setValue(DrugData value);
 };
 
 class HashMap{
 private:
     vector<MapNode*> map;
 public:
-    HashMap(int numDataRows, float loadCapacity);
+    HashMap();
+    HashMap(vector<DrugData> importDrugs);
     ~HashMap();
 
     int hashFunction(string key);
     void addNode(string key, DrugData value);
+    void deleteNode(string key);
+    DrugData *getData(string key);
 
 };
