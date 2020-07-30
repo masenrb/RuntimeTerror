@@ -98,19 +98,17 @@ void HashMap::addNode(string key, DrugData value)
     else
     {
         MapNode *tempNode = map[hashValue];
-        while ((*tempNode).getNextNode() != nullptr && (*(*tempNode).getNextNode()).getKey() != key)
+        MapNode *prevNode = tempNode;
+        while (tempNode != nullptr)
         {
+            if((*tempNode).getKey() == key){
+                (*(*tempNode).getValue()).mergeDrug(value);
+                break;
+            }
+            prevNode = tempNode;
             tempNode = (*tempNode).getNextNode();
         }
-        if ((*tempNode).getNextNode() == nullptr)
-        {
-            (*tempNode).setNextNode(newNode);
-        }
-        else
-        {
-            MapNode *initialNode = (*tempNode).getNextNode();
-            (*(*initialNode).getValue()).mergeDrug(value);
-        }
+        (*prevNode).setNextNode(newNode);
     }
 }
 
@@ -175,9 +173,9 @@ int main()
 
     HashMap newMap = HashMap(test);
 
-    if (newMap.getData("test") != nullptr)
+    if (newMap.getData("Trulicity") != nullptr)
     {
-        newMap.getData("test")->printDrug();
+        newMap.getData("Trulicity")->printDrug();
     }
 
     return 0;
