@@ -14,18 +14,20 @@ AVLNode::AVLNode(DrugData input)
     right = nullptr;
 }
 
+//AVLTree Constructor and Destructor
+AVLTree::AVLTree() //Mostly empty constructor
+{
+    root = nullptr;
+}
+
+AVLTree::~AVLTree()
+{
+    deleteTree(root); //Delete the tree starting at the root
+}
+
 int AVLTree::alphaCompare(AVLNode *node, DrugData input)
 {
     return node->drug.pName.compare(input.pName);
-}
-
-int AVLTree::height(AVLNode *node)
-{
-    if (node == nullptr)
-        return 0;
-    int leftHeight = height(node->left);
-    int rightHeight = height(node->right);
-    return 1 + std::max(leftHeight, rightHeight);
 }
 
 //Rotations
@@ -69,7 +71,26 @@ AVLNode *AVLTree::rightLeftRotation(AVLNode *node)
     return leftRotation(node);
 }
 
-//Insert Helper Functions
+//Recursive Helpers
+void AVLTree::deleteTree(AVLNode *node)
+{
+    if (node == nullptr)
+        return;
+
+    deleteTree(node->left);
+    deleteTree(node->right);
+    delete node;
+}
+
+int AVLTree::height(AVLNode *node)
+{
+    if (node == nullptr)
+        return 0;
+    int leftHeight = height(node->left);
+    int rightHeight = height(node->right);
+    return 1 + std::max(leftHeight, rightHeight);
+}
+
 AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
 {
     //If the node is null add the new node
