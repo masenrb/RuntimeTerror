@@ -14,6 +14,11 @@ AVLNode::AVLNode(DrugData input)
     right = nullptr;
 }
 
+int AVLTree::alphaCompare(AVLNode *node, DrugData input)
+{
+    return node->drug.pName.compare(input.pName);
+}
+
 int AVLTree::height(AVLNode *node)
 {
     if (node == nullptr)
@@ -74,13 +79,11 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     }
 
     //if node isn't null then compare with children to determine placement
-    int alphaCompare = node->drug.pName.compare(input.pName);
-
-    if (alphaCompare > 0) //If new drug is alpha before node
+    if (alphaCompare(node, input) > 0) //If new drug is alpha before node
     {
         node->left = insertHelper(node->left, input);
     }
-    else if (alphaCompare < 0) //If new drug is alpha after node
+    else if (alphaCompare(node, input) < 0) //If new drug is alpha after node
     {
         node->right = insertHelper(node->right, input);
     }
@@ -93,28 +96,28 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     int balanceFactor = height(node->left) - height(node->right);
 
     //R R nodes
-    if (balanceFactor < -1 && (node->right->drug.pName.compare(input.pName) < 0))
+    if (balanceFactor < -1 && alphaCompare(node->right, input) < 0)
     {
         cout << "Left Rotation on " << node->drug.pName << endl;
         return leftRotation(node);
     }
-    
+
     //L L nodes
-    if (balanceFactor > 1 && (node->left->drug.pName.compare(input.pName) > 0))
+    if (balanceFactor > 1 && alphaCompare(node->left, input) > 0)
     {
         cout << "Right Rotation on " << node->drug.pName << endl;
         return rightRotation(node);
     }
 
     //R L nodes
-    if (balanceFactor < -1 && (node->right->drug.pName.compare(input.pName) > 0))
+    if (balanceFactor < -1 && alphaCompare(node->right, input) > 0)
     {
         cout << "Right Left Rotation on " << node->drug.pName << endl;
         return rightLeftRotation(node);
     }
 
     //L R nodes
-    if (balanceFactor > 1 && (node->left->drug.pName.compare(input.pName) < 0))
+    if (balanceFactor > 1 && alphaCompare(node->left, input) < 0)
     {
         cout << "Left Right Rotation on " << node->drug.pName << endl;
         return leftRightRotation(node);
@@ -181,20 +184,30 @@ int main()
 {
     AVLTree tree;
 
-    DrugData a, b, c, d, e, f;
+    DrugData a, b, c, d, e, f, g, h, i, j, k;
     a.pName = "a";
     b.pName = "b";
     c.pName = "c";
     d.pName = "d";
     e.pName = "e";
     f.pName = "f";
+    g.pName = "g";
+    h.pName = "h";
+    i.pName = "i";
+    j.pName = "j";
+    k.pName = "k";
 
-    tree.insert(a); //1
-    tree.insert(b); //2
-    tree.insert(d); //4
-    tree.insert(e); //5
     tree.insert(f); //6
+    tree.insert(e); //5
+    tree.insert(d); //4
+    tree.insert(b); //2
+    tree.insert(a); //1
     tree.insert(c); //3
+    // tree.insert(g);
+    // tree.insert(h);
+    // tree.insert(i);
+    // tree.insert(j);
+    // tree.insert(k);
 
     cout << "Level Order:" << endl;
     tree.levelOrder(tree.root);

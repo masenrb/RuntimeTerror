@@ -20,6 +20,7 @@ private:
     AVLNode *rightLeftRotation(AVLNode *node);
 
     AVLNode* insertHelper(AVLNode *node, DrugData input);
+    int alphaCompare(AVLNode *node, DrugData input);
 
 public:
     void insert(DrugData input);
