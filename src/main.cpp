@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include"DrugData.h"
 
 void PrintHeader() {
@@ -36,6 +37,18 @@ int main() {
 
         std::cout << std::endl << "Searching...\n" << std::endl;
 
+        DrugData *drugData = new DrugData();
+        drugData->pName = "Advil";
+        drugData->npName = "Ibuprofen";
+        drugData->prescription = false;
+        drugData->form.push_back("Coated Tablet");
+        drugData->form.push_back("Liquid Gel");
+        drugData->form.push_back("Shot");
+        drugData->route.push_back("Oral");
+        drugData->route.push_back("Syringe");
+
+        std::string presc = (drugData->prescription) ? "Yes" : "No";
+
         //Will add timestamp here (TEMP)
         int time = 100;
 
@@ -47,12 +60,36 @@ int main() {
 
             std::cout << "------------------------------------------------------------------------------\n"
                          "\n"
-                         "Proprietary name:   \t\tAdvil\n"
-                         "Non-Proprietary names: \t\tIbuprofen\n"
-                         "\t\t\t\t\t\t\tIbuprofen Sodium\n"
-                         "Requires Prescription:\t\tNo\n"
-                         "Dosage Form:\t\t\t\tCoated Tablet\n"
-                         "Route:\t\t\t\t\t\tOral\n"
+                         << std::setw(28) << left << "Proprietary name:" << drugData->pName << "\n"
+                         << std::setw(28) << left << "Non-Proprietary names:" << drugData->npName << "\n"
+                         << std::setw(28) << left << "" << "Ibuprofen Sodium\n"
+                         << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
+                         << std::setw(28) << left << "Dosage Form:";
+                            for (int i = 0; i < drugData->form.size(); i++)
+                            {
+                                if (i != (drugData->form.size() - 1))
+                                {
+                                    cout << drugData->form[i] << endl << std::setw(28) << left << "";
+                                }
+                                else
+                                {
+                                    cout << drugData->form[i] << endl;
+                                }
+                            }
+            std::cout <<
+                        std::setw(28) << left <<"Route:";
+                            for (int i = 0; i < drugData->route.size(); i++)
+                            {
+                                if (i != (drugData->route.size() - 1))
+                                {
+                                    cout << drugData->route[i] << endl << std::setw(28) << left << "";
+                                }
+                                else
+                                {
+                                    cout << drugData->route[i] << endl;
+                                }
+                            }
+            std::cout <<
                          "Approved Producers:\t\t\tPfizer Consumer Healthcare\t\n"
                          "\n"
                          "------------------------------------------------------------------------------\n" << std::endl;
