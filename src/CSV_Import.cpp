@@ -14,7 +14,7 @@ vector<DrugData> csvToDrugData(string filename)
     vector<DrugData> final;
     string line, curData;
 
-    // Counter lets us know which data value we are currenlty on.
+    // Counter lets us know which data value we are currently on.
     bool prescription;
     int counter;
 
