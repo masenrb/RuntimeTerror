@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <iomanip>
+#include <chrono>
+#include <ctime>
 #include"DrugData.h"
 
 void PrintHeader() {
@@ -20,6 +22,7 @@ void PrintHeader() {
 }
 
 int main() {
+    using std::chrono::system_clock;
 
     PrintHeader();
 
@@ -39,54 +42,68 @@ int main() {
 
         DrugData *drugData = new DrugData();
         drugData->pName = "Advil";
-        drugData->npName = "Ibuprofen";
+        drugData->npNames.push_back("Ibuprofen");
+        drugData->npNames.push_back("Ibuprofen MAXIMUM HEADACHE RELIEF");
         drugData->prescription = false;
-        drugData->form.push_back("Coated Tablet");
-        drugData->form.push_back("Liquid Gel");
-        drugData->form.push_back("Shot");
-        drugData->route.push_back("Oral");
-        drugData->route.push_back("Syringe");
+        drugData->forms.push_back("Coated Tablet");
+        drugData->forms.push_back("Liquid Gel");
+        drugData->forms.push_back("Shot");
+        drugData->routes.push_back("Oral");
+        drugData->routes.push_back("Syringe");
 
         std::string presc = (drugData->prescription) ? "Yes" : "No";
 
-        //Will add timestamp here (TEMP)
-        int time = 100;
+        auto start = chrono::high_resolution_clock::now();
 
         bool found = true;
         //Search with either AVL or Map
 
+        auto finish = chrono::high_resolution_clock::now();
+
+        auto time = chrono::duration_cast<chrono::nanoseconds>(finish-start).count();
+
         if (found) {
-            std::cout << "Found! Time needed : " << time << " seconds.\n" << std::endl;
+            std::cout << "Found! Time needed: " << time << " nanoseconds.\n" << std::endl;
 
             std::cout << "------------------------------------------------------------------------------\n"
                          "\n"
                          << std::setw(28) << left << "Proprietary name:" << drugData->pName << "\n"
-                         << std::setw(28) << left << "Non-Proprietary names:" << drugData->npName << "\n"
-                         << std::setw(28) << left << "" << "Ibuprofen Sodium\n"
-                         << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
-                         << std::setw(28) << left << "Dosage Form:";
-                            for (int i = 0; i < drugData->form.size(); i++)
+                         << std::setw(28) << left << "Non-Proprietary names:";
+                            for (int i = 0; i < drugData->npNames.size(); i++)
                             {
-                                if (i != (drugData->form.size() - 1))
+                                if (i != (drugData->npNames.size() - 1))
                                 {
-                                    cout << drugData->form[i] << endl << std::setw(28) << left << "";
+                                    cout << drugData->npNames[i] << endl << std::setw(28) << left << "";
                                 }
                                 else
                                 {
-                                    cout << drugData->form[i] << endl;
+                                    cout << drugData->npNames[i] << endl;
+                                }
+                            }
+                         cout << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
+                         << std::setw(28) << left << "Dosage forms:";
+                            for (int i = 0; i < drugData->forms.size(); i++)
+                            {
+                                if (i != (drugData->forms.size() - 1))
+                                {
+                                    cout << drugData->forms[i] << endl << std::setw(28) << left << "";
+                                }
+                                else
+                                {
+                                    cout << drugData->forms[i] << endl;
                                 }
                             }
             std::cout <<
                         std::setw(28) << left <<"Route:";
-                            for (int i = 0; i < drugData->route.size(); i++)
+                            for (int i = 0; i < drugData->routes.size(); i++)
                             {
-                                if (i != (drugData->route.size() - 1))
+                                if (i != (drugData->routes.size() - 1))
                                 {
-                                    cout << drugData->route[i] << endl << std::setw(28) << left << "";
+                                    cout << drugData->routes[i] << endl << std::setw(28) << left << "";
                                 }
                                 else
                                 {
-                                    cout << drugData->route[i] << endl;
+                                    cout << drugData->routes[i] << endl;
                                 }
                             }
             std::cout <<
@@ -97,13 +114,20 @@ int main() {
             std::cout << "Not Found. Time needed : " << time << " seconds." << std::endl;
         }
 
-        std::cout << "Search Again? (Y/N) ";
-        std::cin >> input;
+        bool response = true;
+        while (response) {
+            std::cout << "Search Again? (Y/N) ";
+            std::cin >> input;
 
-        std::cout << std::endl;
-
-        if (input == "N") {
-            search = false;
+            std::cout << std::endl;
+            if (input == "Y") {
+                response = false;
+            } else if (input == "N") {
+                response = false;
+                search = false;
+            } else {
+                cout << "Incorrect input, please try again.\n" << endl;
+            }
         }
     }
 

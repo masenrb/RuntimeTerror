@@ -1,6 +1,7 @@
 #include "DrugData.h"
 using namespace std;
 
+//DEBUGGING
 void DrugData::printDrug()
     {
         cout << "Proprietary Name: " << pName << endl;
