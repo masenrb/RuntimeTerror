@@ -48,10 +48,6 @@ AVLNode *AVLTree::rightRotation(AVLNode *node)
 
 AVLNode *AVLTree::leftRightRotation(AVLNode *node)
 {
-    //Don't preform operations if empty tree
-    if (node != nullptr)
-        return nullptr;
-
     //Right rotate right node
     node->left = leftRotation(node->left);
 
@@ -61,10 +57,6 @@ AVLNode *AVLTree::leftRightRotation(AVLNode *node)
 
 AVLNode *AVLTree::rightLeftRotation(AVLNode *node)
 {
-    //Don't preform operations if empty tree
-    if (node != nullptr)
-        return nullptr;
-
     //Right rotate right node
     node->right = rightRotation(node->right);
 
@@ -101,26 +93,30 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     int balanceFactor = height(node->left) - height(node->right);
 
     //R R nodes
-    if (balanceFactor < -1 && alphaCompare < 0)
+    if (balanceFactor < -1 && (node->right->drug.pName.compare(input.pName) < 0))
     {
+        cout << "Left Rotation on " << node->drug.pName << endl;
         return leftRotation(node);
     }
-
+    
     //L L nodes
-    if (balanceFactor > 1 && alphaCompare > 0)
+    if (balanceFactor > 1 && (node->left->drug.pName.compare(input.pName) > 0))
     {
+        cout << "Right Rotation on " << node->drug.pName << endl;
         return rightRotation(node);
     }
 
     //R L nodes
-    if (balanceFactor < -1 && alphaCompare > 0)
+    if (balanceFactor < -1 && (node->right->drug.pName.compare(input.pName) > 0))
     {
+        cout << "Right Left Rotation on " << node->drug.pName << endl;
         return rightLeftRotation(node);
     }
 
     //L R nodes
-    if (balanceFactor > 1 && alphaCompare < 0)
+    if (balanceFactor > 1 && (node->left->drug.pName.compare(input.pName) < 0))
     {
+        cout << "Left Right Rotation on " << node->drug.pName << endl;
         return leftRightRotation(node);
     }
 
@@ -193,12 +189,12 @@ int main()
     e.pName = "e";
     f.pName = "f";
 
-    tree.insert(a);
-    tree.insert(b);
-    tree.insert(d);
-    tree.insert(e);
-    tree.insert(f);
-    //tree.insert(c);
+    tree.insert(a); //1
+    tree.insert(b); //2
+    tree.insert(d); //4
+    tree.insert(e); //5
+    tree.insert(f); //6
+    tree.insert(c); //3
 
     cout << "Level Order:" << endl;
     tree.levelOrder(tree.root);
@@ -206,5 +202,7 @@ int main()
 
     cout << "Inorder Traversal:" << endl;
     tree.inorderTraversal(tree.root);
+
+    cout << "Root: " << tree.root->drug.pName << endl;
     return 0;
 }
