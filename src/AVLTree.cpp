@@ -113,8 +113,9 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     {
         node->right = insertHelper(node->right, input);
     }
-    else //If the new drug duplicate then ignore it
+    else //If the new drug duplicate then merge it with already existing drug
     {
+        node->drug.mergeDrug(input);
         return node;
     }
 
