@@ -1,4 +1,5 @@
 #include "AVLTree.h"
+#include "DrugData.h"
 #include <iostream>
 #include <algorithm>
 //Class definitions for AVL Tree
@@ -240,8 +241,11 @@ int main()
 {
     AVLTree tree;
 
-    DrugData a, b, c, d, e, f, g, h, i, j, k;
+    DrugData a, b, c, d, e, f, g, h, i, j, k, aa;
     a.pName = "a";
+    a.forms.push_back("Yeet");
+    aa.pName = "a";
+    aa.forms.push_back("Yoot");
     b.pName = "b";
     c.pName = "c";
     d.pName = "d";
@@ -259,6 +263,7 @@ int main()
     tree.insert(b); //2
     tree.insert(a); //1
     tree.insert(c); //3
+    tree.insert(aa);
     // tree.insert(g);
     // tree.insert(h);
     // tree.insert(i);
@@ -275,7 +280,10 @@ int main()
     cout << "Root: " << tree.root->drug.pName << endl;
 
 
-    DrugData *test = tree.search("j");
+    DrugData *test = tree.search("a");
+    for(int i = 0; i < test->forms.size(); i++)
+        cout << test->forms[i] << endl;
+    
 
     if (test == nullptr)
     {
