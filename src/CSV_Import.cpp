@@ -14,7 +14,7 @@ vector<DrugData> csvToDrugData(string filename)
     vector<DrugData> final;
     string line, curData;
 
-    // Counter lets us know which data value we are currenlty on.
+    // Counter lets us know which data value we are currently on.
     bool prescription;
     int counter;
 
@@ -92,12 +92,4 @@ vector<DrugData> csvToDrugData(string filename)
         final.push_back(drug);
     }
     return final;
-}
-
-int main(){
-    vector <DrugData> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
-    for(int i = 0; i < test.size(); i++){
-        test[i].printDrug();
-    }
-    return 0;
 }
