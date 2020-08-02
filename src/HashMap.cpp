@@ -6,7 +6,7 @@
 using namespace std;
 
 const float LOAD_CAPACITY = .67;
-const int NUM_DATA_ROWS = 100;
+const int DEFAULT_NUM_ROWS = 100000;
 
 MapNode::MapNode(string key, DrugData *value)
 {
@@ -37,16 +37,19 @@ void MapNode::setNextNode(MapNode *next)
 
 HashMap::HashMap()
 {
-    map = vector<MapNode *>((int)(NUM_DATA_ROWS / LOAD_CAPACITY), nullptr);
+    map = vector<MapNode *>((int)(DEFAULT_NUM_ROWS / LOAD_CAPACITY), nullptr);
+    numRows = DEFAULT_NUM_ROWS;
 }
 
 HashMap::HashMap(vector<DrugData> importDrugs)
 {
-    map = vector<MapNode *>((int)(importDrugs.size() / LOAD_CAPACITY), nullptr);
+    numRows = importDrugs.size();
+    map = vector<MapNode *>((int)(numRows / LOAD_CAPACITY), nullptr);
     for (int i = 0; i < importDrugs.size(); i++)
     {
         addNode(importDrugs[i].pName, importDrugs[i]);
     }
+    numRows = importDrugs.size();
 }
 
 HashMap::~HashMap()
@@ -77,7 +80,7 @@ int HashMap::hashFunction(string key)
         hashValue = hashValue + c * pow(power, counter);
         counter++;
     }
-    int final = abs(hashValue % ((int)(NUM_DATA_ROWS / LOAD_CAPACITY)));
+    int final = abs(hashValue % ((int)(numRows / LOAD_CAPACITY)));
 
     return final;
 }

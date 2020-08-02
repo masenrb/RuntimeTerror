@@ -18,6 +18,7 @@ public:
 
 class HashMap{
 private:
+    int numRows;
     vector<MapNode*> map;
 public:
     HashMap();
