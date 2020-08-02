@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <sstream>
 #include "DrugData.h"
+#include "DrugData.cpp"
 using namespace std;
 
 vector<DrugData> csvToDrugData(string filename);
