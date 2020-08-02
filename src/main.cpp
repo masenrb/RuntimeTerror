@@ -38,6 +38,19 @@ int main() {
         std::cout << "\nPlease type the name of the drug you are looking for: ";
         std::cin >> drug;
 
+        int i = 0;
+        int check = 0;
+        cout<<"previous string: "<<drug<<endl;
+        while(drug[i]){
+            if(check==0){
+                drug[i]=toupper(drug[i]);     //conversion of string takes place here
+                check=1;
+            }else if(isspace(drug[i]))       // change status of check if move to another word
+                check=0;
+            i++;
+        }
+        cout<<"Processed string: "<<drug<<endl;
+
         std::cout << std::endl << "Searching...\n" << std::endl;
 
         DrugData *drugData = new DrugData();
