@@ -1,5 +1,5 @@
 #include "AVLTree.h"
-#include "DrugData.h"
+#include "CSV_Import.h"
 #include <iostream>
 #include <algorithm>
 //Class definitions for AVL Tree
@@ -18,6 +18,15 @@ AVLNode::AVLNode(DrugData input)
 AVLTree::AVLTree() //Mostly empty constructor
 {
     root = nullptr;
+}
+
+//Constructor to handle CSV import
+AVLTree::AVLTree(vector<DrugData> drugVector)
+{
+    for (int i = 0; i < drugVector.size(); i++)
+    {
+        insert(drugVector[i]);
+    }
 }
 
 AVLTree::~AVLTree()
@@ -126,28 +135,28 @@ AVLNode *AVLTree::insertHelper(AVLNode *node, DrugData input)
     //R R nodes
     if (balanceFactor < -1 && alphaCompare(node->right, input) < 0)
     {
-        cout << "Left Rotation on " << node->drug.pName << endl;
+        //cout << "Left Rotation on " << node->drug.pName << endl;
         return leftRotation(node);
     }
 
     //L L nodes
     if (balanceFactor > 1 && alphaCompare(node->left, input) > 0)
     {
-        cout << "Right Rotation on " << node->drug.pName << endl;
+        //cout << "Right Rotation on " << node->drug.pName << endl;
         return rightRotation(node);
     }
 
     //R L nodes
     if (balanceFactor < -1 && alphaCompare(node->right, input) > 0)
     {
-        cout << "Right Left Rotation on " << node->drug.pName << endl;
+        //cout << "Right Left Rotation on " << node->drug.pName << endl;
         return rightLeftRotation(node);
     }
 
     //L R nodes
     if (balanceFactor > 1 && alphaCompare(node->left, input) < 0)
     {
-        cout << "Left Right Rotation on " << node->drug.pName << endl;
+        //cout << "Left Right Rotation on " << node->drug.pName << endl;
         return leftRightRotation(node);
     }
 
@@ -189,110 +198,4 @@ DrugData *AVLTree::search(string name)
 
     //Return new pointer
     return returnDrugData;
-}
-
-//Debugging
-void AVLTree::levelOrder(AVLNode *root)
-{
-    if (root != nullptr)
-    {
-        queue<AVLNode *> queue;
-        int levelnum = 1;
-        queue.push(root);
-
-        while (!queue.empty())
-        {
-            int qSize = queue.size(); //Keeping a consitant size
-            vector<std::string> level;
-            for (int i = 0; i < qSize; i++)
-            {
-                AVLNode *temp = queue.front();     //Looking at the first node in the queue
-                level.push_back(temp->drug.pName); //Adding it's value to the level list
-                queue.pop();                       //Removing first in queue node
-
-                if (temp->left != nullptr)
-                    queue.push(temp->left);
-                if (temp->right != nullptr)
-                    queue.push(temp->right);
-            }
-
-            cout << "Level: " << levelnum << endl;
-            for (int i = 0; i < level.size(); i++)
-            {
-                cout << level[i] << " ";
-            }
-            cout << endl;
-            levelnum++;
-        }
-    }
-}
-
-void AVLTree::inorderTraversal(AVLNode *node)
-{
-    if (node != nullptr)
-    {
-        inorderTraversal(node->left);
-        std::cout << node->drug.pName << " ";
-        inorderTraversal(node->right);
-    }
-}
-
-int main()
-{
-    AVLTree tree;
-
-    DrugData a, b, c, d, e, f, g, h, i, j, k, aa;
-    a.pName = "a";
-    a.forms.push_back("Yeet");
-    aa.pName = "a";
-    aa.forms.push_back("Yoot");
-    b.pName = "b";
-    c.pName = "c";
-    d.pName = "d";
-    e.pName = "e";
-    f.pName = "f";
-    g.pName = "g";
-    h.pName = "h";
-    i.pName = "i";
-    j.pName = "j";
-    k.pName = "k";
-
-    tree.insert(f); //6
-    tree.insert(e); //5
-    tree.insert(d); //4
-    tree.insert(b); //2
-    tree.insert(a); //1
-    tree.insert(c); //3
-    tree.insert(aa);
-    // tree.insert(g);
-    // tree.insert(h);
-    // tree.insert(i);
-    // tree.insert(j);
-    // tree.insert(k);
-
-    cout << "Level Order:" << endl;
-    tree.levelOrder(tree.root);
-    cout << endl;
-
-    cout << "Inorder Traversal:" << endl;
-    tree.inorderTraversal(tree.root);
-
-    cout << "Root: " << tree.root->drug.pName << endl;
-
-
-    DrugData *test = tree.search("a");
-    for(int i = 0; i < test->forms.size(); i++)
-        cout << test->forms[i] << endl;
-    
-
-    if (test == nullptr)
-    {
-        cout << "Was not Found!" << endl;
-    }
-    else
-    {
-        cout << "Found!" << endl;
-    }
-    
-    return 0;
 }

@@ -14,6 +14,8 @@ struct AVLNode
 class AVLTree
 {
 private:
+    AVLNode *root = nullptr;
+
     //Rotations
     AVLNode* leftRotation(AVLNode *node);
     AVLNode* rightRotation(AVLNode *node);
@@ -35,13 +37,9 @@ private:
 public:
     void insert(DrugData input);
     DrugData* search(string name);
+
+    //Constructor and Destructor
     AVLTree();
+    AVLTree(vector<DrugData> drugVector);
     ~AVLTree();
-
-    //Debugging
-    void levelOrder(AVLNode* root);
-    void inorderTraversal(AVLNode *node);
-
-    //Move to private after debugging
-    AVLNode *root = nullptr;
 };
