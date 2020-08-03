@@ -32,24 +32,38 @@ int main() {
         std::string input;
         std::string drug;
 
-        std::cout << "Would you like to search using an AVL Tree or a Map? (A/M) ";
-        std::cin >> input;
+        bool correctSearch = true;
 
-        std::cout << "\nPlease type the name of the drug you are looking for: ";
-        std::cin >> drug;
-
-        int i = 0;
-        int check = 0;
-        cout<<"previous string: "<<drug<<endl;
-        while(drug[i]){
-            if(check==0){
-                drug[i]=toupper(drug[i]);     //conversion of string takes place here
-                check=1;
-            }else if(isspace(drug[i]))       // change status of check if move to another word
-                check=0;
-            i++;
+        while(correctSearch) {
+            std::cout << "Would you like to search using an AVL Tree or a Map? (A/M) ";
+            std::cin >> input;
+            input = ::toupper(input[0]);
+            if (input != "A" and input != "M") {
+                cout << "\nInvalid input, please enter A or M\n" << endl;
+                continue;
+            } else {
+                correctSearch = false;
+            }
         }
-        cout<<"Processed string: "<<drug<<endl;
+        cin.get();
+
+        std::cout << endl << "Please type the name of the drug you are looking for: ";
+        getline(cin, drug);
+
+
+        transform(drug.begin(), drug.end(), drug.begin(), ::toupper);
+
+        //Makes first character of each word uppercase
+        // int i = 0;
+        //int check = 0;
+//        while(drug[i]){
+//            if(check==0){
+//                drug[i]=toupper(drug[i]);     //conversion of string takes place here
+//                check=1;
+//            }else if(isspace(drug[i]))       // change status of check if move to another word
+//                check=0;
+//            i++;
+//        }
 
         std::cout << std::endl << "Searching...\n" << std::endl;
 
