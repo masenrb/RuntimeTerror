@@ -1,11 +1,6 @@
-//
-// Created by Masen Beliveau on 7/20/20.
-//
-
 #include <iostream>
 #include <iomanip>
 #include <chrono>
-#include <ctime>
 #include"DrugData.h"
 
 void PrintHeader() {
@@ -22,18 +17,21 @@ void PrintHeader() {
 }
 
 int main() {
+    //To get timestamps
     using std::chrono::system_clock;
 
     PrintHeader();
 
     bool search = true;
 
+    //Loop until the user no longer wants to search
     while (search) {
         std::string input;
         std::string drug;
 
         bool correctSearch = true;
 
+        //Search guard to make sure input is A or M
         while(correctSearch) {
             std::cout << "Would you like to search using an AVL Tree or a Map? (A/M) ";
             std::cin >> input;
@@ -50,23 +48,13 @@ int main() {
         std::cout << endl << "Please type the name of the drug you are looking for: ";
         getline(cin, drug);
 
-
+        //Makes drug input string capitalized for string comparison
         transform(drug.begin(), drug.end(), drug.begin(), ::toupper);
-
-        //Makes first character of each word uppercase
-        // int i = 0;
-        //int check = 0;
-//        while(drug[i]){
-//            if(check==0){
-//                drug[i]=toupper(drug[i]);     //conversion of string takes place here
-//                check=1;
-//            }else if(isspace(drug[i]))       // change status of check if move to another word
-//                check=0;
-//            i++;
-//        }
 
         std::cout << std::endl << "Searching...\n" << std::endl;
 
+        //TEMPORARY
+        //REMOVE AFTER IMPLEMENTING SEARCH
         DrugData *drugData = new DrugData();
         drugData->pName = "Advil";
         drugData->npNames.push_back("Ibuprofen");
@@ -78,17 +66,21 @@ int main() {
         drugData->routes.push_back("Oral");
         drugData->routes.push_back("Syringe");
 
+        //If statement to say if drug needs prescription or not dependent on bool
         std::string presc = (drugData->prescription) ? "Yes" : "No";
 
+        //Start clock before search
         auto start = chrono::high_resolution_clock::now();
 
         bool found = true;
         //Search with either AVL or Map
 
+        //End clock after search finished
         auto finish = chrono::high_resolution_clock::now();
 
         auto time = chrono::duration_cast<chrono::nanoseconds>(finish-start).count();
 
+        //If the drug exists in system
         if (found) {
             std::cout << "Found! Time needed: " << time << " nanoseconds.\n" << std::endl;
 
@@ -142,6 +134,8 @@ int main() {
         }
 
         bool response = true;
+
+        //Search guard to make sure input is Y or N
         while (response) {
             std::cout << "Search Again? (Y/N) ";
             std::cin >> input;
