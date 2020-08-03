@@ -86,49 +86,49 @@ int main() {
 
             std::cout << "------------------------------------------------------------------------------\n"
                          "\n"
-                         << std::setw(28) << left << "Proprietary name:" << drugData->pName << "\n"
-                         << std::setw(28) << left << "Non-Proprietary names:";
-                            for (int i = 0; i < drugData->npNames.size(); i++)
-                            {
-                                if (i != (drugData->npNames.size() - 1))
-                                {
-                                    cout << drugData->npNames[i] << endl << std::setw(28) << left << "";
-                                }
-                                else
-                                {
-                                    cout << drugData->npNames[i] << endl;
-                                }
-                            }
-                         cout << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
-                         << std::setw(28) << left << "Dosage forms:";
-                            for (int i = 0; i < drugData->forms.size(); i++)
-                            {
-                                if (i != (drugData->forms.size() - 1))
-                                {
-                                    cout << drugData->forms[i] << endl << std::setw(28) << left << "";
-                                }
-                                else
-                                {
-                                    cout << drugData->forms[i] << endl;
-                                }
-                            }
+                      << std::setw(28) << left << "Proprietary name:" << drugData->pName << "\n"
+                      << std::setw(28) << left << "Non-Proprietary names:";
+            for (int i = 0; i < drugData->npNames.size(); i++)
+            {
+                if (i != (drugData->npNames.size() - 1))
+                {
+                    cout << drugData->npNames[i] << endl << std::setw(28) << left << "";
+                }
+                else
+                {
+                    cout << drugData->npNames[i] << endl;
+                }
+            }
+            cout << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
+                 << std::setw(28) << left << "Dosage forms:";
+            for (int i = 0; i < drugData->forms.size(); i++)
+            {
+                if (i != (drugData->forms.size() - 1))
+                {
+                    cout << drugData->forms[i] << endl << std::setw(28) << left << "";
+                }
+                else
+                {
+                    cout << drugData->forms[i] << endl;
+                }
+            }
             std::cout <<
-                        std::setw(28) << left <<"Route:";
-                            for (int i = 0; i < drugData->routes.size(); i++)
-                            {
-                                if (i != (drugData->routes.size() - 1))
-                                {
-                                    cout << drugData->routes[i] << endl << std::setw(28) << left << "";
-                                }
-                                else
-                                {
-                                    cout << drugData->routes[i] << endl;
-                                }
-                            }
+                      std::setw(28) << left <<"Route:";
+            for (int i = 0; i < drugData->routes.size(); i++)
+            {
+                if (i != (drugData->routes.size() - 1))
+                {
+                    cout << drugData->routes[i] << endl << std::setw(28) << left << "";
+                }
+                else
+                {
+                    cout << drugData->routes[i] << endl;
+                }
+            }
             std::cout <<
-                         "Approved Producers:\t\t\tPfizer Consumer Healthcare\t\n"
-                         "\n"
-                         "------------------------------------------------------------------------------\n" << std::endl;
+                      "Approved Producers:\t\t\tPfizer Consumer Healthcare\t\n"
+                      "\n"
+                      "------------------------------------------------------------------------------\n" << std::endl;
         } else {
             std::cout << "Not Found. Time needed : " << time << " seconds." << std::endl;
         }
