@@ -146,7 +146,7 @@ int main() {
                       "\n"
                       "------------------------------------------------------------------------------\n" << std::endl;
         } else {
-            std::cout << "Not Found. Time needed : " << time << " seconds.\n" << std::endl;
+            std::cout << "Not Found. Time needed : " << time << " nanoseconds.\n" << std::endl;
         }
 
         bool response = true;
