@@ -28,7 +28,7 @@ int main() {
 
     cout << "Loading data..." << endl;
 
-    vector<DrugData> drugs = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
+    vector<DrugData> drugs = csvToDrugData("RawData/Drugs_product(Shortened).csv");
     HashMap drugs_hash(drugs.size());
     AVLTree drugs_avl;
 
@@ -142,9 +142,18 @@ int main() {
                 }
             }
             std::cout <<
-                      "Approved Producers:\t\t\tPfizer Consumer Healthcare\t\n"
-                      "\n"
-                      "------------------------------------------------------------------------------\n" << std::endl;
+                      std::setw(28) << left <<"Approved Producers::";
+            for (int i = 0; i < searchedDrug->providers.size(); i++)
+            {
+                if (i != (searchedDrug->providers.size() - 1))
+                {
+                    cout << searchedDrug->providers[i] << endl << std::setw(28) << left << "";
+                }
+                else
+                {
+                    cout << searchedDrug->providers[i] << endl << endl;
+                }
+            }
         } else {
             std::cout << "Not Found. Time needed : " << time << " nanoseconds.\n" << std::endl;
         }
