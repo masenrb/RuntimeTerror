@@ -101,19 +101,19 @@ int HashMap::hashFunction(string key)
 }
 
 // Adds node to HashMap using a key and a DrugData object.
-void HashMap::addNode(string key, DrugData value)
+void HashMap::addNode(DrugData value)
 {
-    int hashValue = hashFunction(key);
+    int hashValue = hashFunction(value.pName);
 
     // We create a new DrugData pointer to not point to the DrugData passed in which is on the stack.
     DrugData *newDrug = new DrugData;
 
     // The function mergeDrug and the assignment of key to pName both act as a copy contructor to the DrugData object.
     (*newDrug).mergeDrug(value);
-    (*newDrug).pName = key;
+    (*newDrug).pName = value.pName;
 
     // We create a MapNode before inputting into the HashMap.
-    MapNode *newNode = new MapNode(key, newDrug);
+    MapNode *newNode = new MapNode(value.pName, newDrug);
 
     // If there is no DrugData at this index, we add the MapNode just created.
     if (map[hashValue] == nullptr)
@@ -130,7 +130,7 @@ void HashMap::addNode(string key, DrugData value)
         while (tempNode != nullptr)
         {
             // If we find a Node with the same key, we merge our DrugData to the original one and break the loop.
-            if ((*tempNode).getKey() == key)
+            if ((*tempNode).getKey() == value.pName)
             {
                 (*(*tempNode).getValue()).mergeDrug(value);
                 merged = true;

@@ -26,7 +26,7 @@ public:
     ~HashMap();
 
     int hashFunction(string key);
-    void addNode(string key, DrugData value);
+    void addNode(DrugData value);
     void deleteNode(string key);
     DrugData *getData(string key);
 
