@@ -80,8 +80,6 @@ int main() {
 
         std::cout << std::endl << "Searching...\n" << std::endl;
 
-        //TEMPORARY
-        //REMOVE AFTER IMPLEMENTING SEARCH
         DrugData* searchedDrug;
 
         //Start clock before search
@@ -129,8 +127,7 @@ int main() {
                     cout << searchedDrug->npNames[i] << endl;
                 }
             }
-            cout << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
-                 << std::setw(28) << left << "Dosage forms:";
+            cout << std::setw(28) << left << "Dosage forms:";
             for (int i = 0; i < searchedDrug->forms.size(); i++)
             {
                 if (i != (searchedDrug->forms.size() - 1))
