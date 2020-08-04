@@ -2,6 +2,9 @@
 #include <iomanip>
 #include <chrono>
 #include"DrugData.h"
+#include "CSV_Import.h"
+#include "HashMap.h"
+#include "AVLTree.h"
 
 void PrintHeader() {
     std::cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
@@ -21,6 +24,29 @@ int main() {
     using std::chrono::system_clock;
 
     PrintHeader();
+
+    cout << "Loading data..." << endl;
+
+    vector<DrugData> drugs = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
+    HashMap drugs_hash;
+    AVLTree drugs_avl;
+
+    for (int i = 0; i < drugs.size(); i++) {
+        drugs_hash.addNode(drugs[i].pName, drugs[i]);
+        drugs_avl.insert(drugs[i]);
+        if (i == 0.25 * drugs.size()) {
+            cout << "25%\n";
+        }
+        if (i == 0.5 * drugs.size()) {
+            cout << "50%\n";
+        }
+        if (i == 0.75 * drugs.size()) {
+            cout << "75%\n";
+        }
+        if (i == drugs.size() - 1) {
+            cout << "100%\n" << endl;
+        }
+    }
 
     bool search = true;
 

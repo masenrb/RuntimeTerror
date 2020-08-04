@@ -166,17 +166,3 @@ DrugData *HashMap::getData(string key)
         return nullptr;
     }
 }
-
-int main()
-{
-    vector<DrugData> test = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
-
-    HashMap newMap = HashMap(test);
-
-    if (newMap.getData("Trulicity") != nullptr)
-    {
-        newMap.getData("Trulicity")->printDrug();
-    }
-
-    return 0;
-}
