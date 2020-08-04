@@ -18,14 +18,15 @@ public:
 
 class HashMap{
 private:
+    int numRows;
     vector<MapNode*> map;
 public:
     HashMap();
-    HashMap(vector<DrugData> importDrugs);
+    HashMap(int dataSize);
     ~HashMap();
 
     int hashFunction(string key);
-    void addNode(string key, DrugData value);
+    void addNode(DrugData value);
     void deleteNode(string key);
     DrugData *getData(string key);
 
