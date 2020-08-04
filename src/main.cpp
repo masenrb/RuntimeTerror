@@ -28,19 +28,19 @@ int main() {
     cout << "Loading data..." << endl;
 
     vector<DrugData> drugs = csvToDrugData("../RawData/Drugs_product(Shortened).csv");
-    HashMap drugs_hash;
+    HashMap drugs_hash(drugs.size());
     AVLTree drugs_avl;
 
     for (int i = 0; i < drugs.size(); i++) {
-        drugs_hash.addNode(drugs[i].pName, drugs[i]);
+        drugs_hash.addNode(drugs[i]);
         drugs_avl.insert(drugs[i]);
-        if (i == 0.25 * drugs.size()) {
+        if (i == (int)(0.25 * drugs.size())) {
             cout << "25%\n";
         }
-        if (i == 0.5 * drugs.size()) {
+        if (i == (int)(0.5 * drugs.size())) {
             cout << "50%\n";
         }
-        if (i == 0.75 * drugs.size()) {
+        if (i == (int)(0.75 * drugs.size())) {
             cout << "75%\n";
         }
         if (i == drugs.size() - 1) {
@@ -81,30 +81,31 @@ int main() {
 
         //TEMPORARY
         //REMOVE AFTER IMPLEMENTING SEARCH
-        DrugData *drugData = new DrugData();
-        drugData->pName = "Advil";
-        drugData->npNames.push_back("Ibuprofen");
-        drugData->npNames.push_back("Ibuprofen MAXIMUM HEADACHE RELIEF");
-        drugData->prescription = false;
-        drugData->forms.push_back("Coated Tablet");
-        drugData->forms.push_back("Liquid Gel");
-        drugData->forms.push_back("Shot");
-        drugData->routes.push_back("Oral");
-        drugData->routes.push_back("Syringe");
-
-        //If statement to say if drug needs prescription or not dependent on bool
-        std::string presc = (drugData->prescription) ? "Yes" : "No";
+        DrugData* searchedDrug;
 
         //Start clock before search
         auto start = chrono::high_resolution_clock::now();
 
-        bool found = true;
         //Search with either AVL or Map
+        if (input == "A") {
+            searchedDrug = drugs_avl.search(drug);
+        } else {
+            searchedDrug = drugs_hash.getData(drug);
+        }
+
+        //If statement to say if drug needs prescription or not dependent on bool
+        std::string presc = (searchedDrug->prescription) ? "Yes" : "No";
+
+        bool found = true;
 
         //End clock after search finished
         auto finish = chrono::high_resolution_clock::now();
 
         auto time = chrono::duration_cast<chrono::nanoseconds>(finish-start).count();
+        
+        if (searchedDrug == nullptr) {
+            found = false;
+        }
 
         //If the drug exists in system
         if (found) {
@@ -112,43 +113,43 @@ int main() {
 
             std::cout << "------------------------------------------------------------------------------\n"
                          "\n"
-                      << std::setw(28) << left << "Proprietary name:" << drugData->pName << "\n"
+                      << std::setw(28) << left << "Proprietary name:" << searchedDrug->pName << "\n"
                       << std::setw(28) << left << "Non-Proprietary names:";
-            for (int i = 0; i < drugData->npNames.size(); i++)
+            for (int i = 0; i < searchedDrug->npNames.size(); i++)
             {
-                if (i != (drugData->npNames.size() - 1))
+                if (i != (searchedDrug->npNames.size() - 1))
                 {
-                    cout << drugData->npNames[i] << endl << std::setw(28) << left << "";
+                    cout << searchedDrug->npNames[i] << endl << std::setw(28) << left << "";
                 }
                 else
                 {
-                    cout << drugData->npNames[i] << endl;
+                    cout << searchedDrug->npNames[i] << endl;
                 }
             }
             cout << std::setw(28) << left << "Requires Prescription:" << presc << "\n"
                  << std::setw(28) << left << "Dosage forms:";
-            for (int i = 0; i < drugData->forms.size(); i++)
+            for (int i = 0; i < searchedDrug->forms.size(); i++)
             {
-                if (i != (drugData->forms.size() - 1))
+                if (i != (searchedDrug->forms.size() - 1))
                 {
-                    cout << drugData->forms[i] << endl << std::setw(28) << left << "";
+                    cout << searchedDrug->forms[i] << endl << std::setw(28) << left << "";
                 }
                 else
                 {
-                    cout << drugData->forms[i] << endl;
+                    cout << searchedDrug->forms[i] << endl;
                 }
             }
             std::cout <<
                       std::setw(28) << left <<"Route:";
-            for (int i = 0; i < drugData->routes.size(); i++)
+            for (int i = 0; i < searchedDrug->routes.size(); i++)
             {
-                if (i != (drugData->routes.size() - 1))
+                if (i != (searchedDrug->routes.size() - 1))
                 {
-                    cout << drugData->routes[i] << endl << std::setw(28) << left << "";
+                    cout << searchedDrug->routes[i] << endl << std::setw(28) << left << "";
                 }
                 else
                 {
-                    cout << drugData->routes[i] << endl;
+                    cout << searchedDrug->routes[i] << endl;
                 }
             }
             std::cout <<
