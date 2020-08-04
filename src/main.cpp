@@ -94,18 +94,20 @@ int main() {
             searchedDrug = drugs_hash.getData(drug);
         }
 
-        //If statement to say if drug needs prescription or not dependent on bool
-        std::string presc = (searchedDrug->prescription) ? "Yes" : "No";
-
         bool found = true;
 
         //End clock after search finished
         auto finish = chrono::high_resolution_clock::now();
 
         auto time = chrono::duration_cast<chrono::nanoseconds>(finish-start).count();
+
+        std::string presc;
         
         if (searchedDrug == nullptr) {
             found = false;
+        } else {
+            //If statement to say if drug needs prescription or not dependent on bool
+            presc = (searchedDrug->prescription) ? "Yes" : "No";
         }
 
         //If the drug exists in system
@@ -158,7 +160,7 @@ int main() {
                       "\n"
                       "------------------------------------------------------------------------------\n" << std::endl;
         } else {
-            std::cout << "Not Found. Time needed : " << time << " seconds." << std::endl;
+            std::cout << "Not Found. Time needed : " << time << " seconds.\n" << std::endl;
         }
 
         bool response = true;
