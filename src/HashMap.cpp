@@ -46,19 +46,11 @@ HashMap::HashMap()
     numRows = DEFAULT_NUM_ROWS;
 }
 
-// Constructor that takes in a vector of drugs and creates node for each of them.
-HashMap::HashMap(vector<DrugData> importDrugs)
+// This constructor allows to set a good size for the HashMap to cause minimal conflicts.
+HashMap::HashMap(int dataSize)
 {
-    numRows = importDrugs.size();
-
-    // Dividing the number of rows of data by load capacity gives a decently sized HashMap to reduce conflicts.
-    map = vector<MapNode *>((int)(numRows / LOAD_CAPACITY), nullptr);
-    for (int i = 0; i < importDrugs.size(); i++)
-    {
-        // The proprietary name serves as a key for DrugData search.
-        addNode(importDrugs[i].pName, importDrugs[i]);
-    }
-    numRows = importDrugs.size();
+    map = vector<MapNode *>((int)(dataSize / LOAD_CAPACITY), nullptr);
+    numRows = dataSize;
 }
 
 // Destructor that loops through each HasMap slot and loops through each bucket to delete all pointers to MapNodes.

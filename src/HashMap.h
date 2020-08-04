@@ -22,7 +22,7 @@ private:
     vector<MapNode*> map;
 public:
     HashMap();
-    HashMap(vector<DrugData> importDrugs);
+    HashMap(int dataSize);
     ~HashMap();
 
     int hashFunction(string key);
