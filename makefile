@@ -1,2 +1,3 @@
 Project3:
-    g++ -o Project3.out src/*.cpp
+	g++ -o src/Project3.out src/*.cpp
+	cd src/ && call Project3.out
