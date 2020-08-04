@@ -28,7 +28,7 @@ int main() {
 
     cout << "Loading data..." << endl;
 
-    vector<DrugData> drugs = csvToDrugData("RawData/Drugs_product(Shortened).csv");
+    vector<DrugData> drugs = csvToDrugData("RawData/Drugs_product.csv");
     HashMap drugs_hash(drugs.size());
     AVLTree drugs_avl;
 
