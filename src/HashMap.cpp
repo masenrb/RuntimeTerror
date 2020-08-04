@@ -213,14 +213,12 @@ DrugData *HashMap::getData(string key)
         }
 
         // If the MapNode is not found in the bucket, we return a nullptr and a message.
-        cout << "Not Found!" << endl;
         return nullptr;
     }
 
     // In the case where the key inputted leads to no MapNodes, we ignore the request and return a nullptr and a message.
     else
     {
-        cout << "Not Found!" << endl;
         return nullptr;
     }
 }
