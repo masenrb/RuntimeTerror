@@ -1,7 +1,8 @@
 #include <iostream>
+#include <algorithm>
 #include <iomanip>
 #include <chrono>
-#include"DrugData.h"
+#include "DrugData.h"
 #include "CSV_Import.h"
 #include "HashMap.h"
 #include "AVLTree.h"
@@ -62,7 +63,7 @@ int main() {
             std::cout << "Would you like to search using an AVL Tree or a Map? (A/M) ";
             std::cin >> input;
             input = ::toupper(input[0]);
-            if (input != "A" and input != "M") {
+            if (input != "A" && input != "M") {
                 cout << "\nInvalid input, please enter A or M\n" << endl;
                 continue;
             } else {
@@ -75,7 +76,7 @@ int main() {
         getline(cin, drug);
 
         //Makes drug input string capitalized for string comparison
-        transform(drug.begin(), drug.end(), drug.begin(), ::toupper);
+        std::transform(drug.begin(), drug.end(), drug.begin(), ::toupper);
 
         std::cout << std::endl << "Searching...\n" << std::endl;
 
