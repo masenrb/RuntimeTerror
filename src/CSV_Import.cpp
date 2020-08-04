@@ -49,6 +49,7 @@ vector<DrugData> csvToDrugData(string filename)
             // Handles Proprietary Name.
             case 2:
             {
+                transform(curData.begin(), curData.end(), curData.begin(), ::toupper);
                 drug.pName = curData;
                 break;
             }
@@ -91,5 +92,6 @@ vector<DrugData> csvToDrugData(string filename)
         }
         final.push_back(drug);
     }
+    final.erase(final.begin());
     return final;
 }
