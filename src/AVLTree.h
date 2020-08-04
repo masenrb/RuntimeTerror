@@ -40,6 +40,5 @@ public:
 
     //Constructor and Destructor
     AVLTree();
-    AVLTree(vector<DrugData> drugVector);
     ~AVLTree();
 };

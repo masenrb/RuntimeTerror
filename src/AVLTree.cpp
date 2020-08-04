@@ -20,15 +20,6 @@ AVLTree::AVLTree() //Mostly empty constructor
     root = nullptr;
 }
 
-//Constructor to handle CSV import
-AVLTree::AVLTree(vector<DrugData> drugVector)
-{
-    for (int i = 0; i < drugVector.size(); i++)
-    {
-        insert(drugVector[i]);
-    }
-}
-
 AVLTree::~AVLTree()
 {
     deleteTree(root); //Delete the tree starting at the root
