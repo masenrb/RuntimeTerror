@@ -166,6 +166,7 @@ int main() {
             std::cin >> input;
 
             std::cout << std::endl;
+            input = ::toupper(input[0]);
             if (input == "Y") {
                 response = false;
             } else if (input == "N") {
