@@ -2,10 +2,8 @@
 #include "CSV_Import.h"
 #include <iostream>
 #include <algorithm>
-//Class definitions for AVL Tree
-//DEBUGGING
-#include <queue>
 
+//Class definitions for AVL Tree
 //AVLNode constructor
 AVLNode::AVLNode(DrugData input)
 {
