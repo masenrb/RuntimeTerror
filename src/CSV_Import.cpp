@@ -64,10 +64,7 @@ vector<DrugData> csvToDrugData(string filename)
             {
                 stringstream dosageStream(curData);
                 string curDosage;
-                while (getline(dosageStream, curDosage, '-'))
-                {
-                    drug.forms.push_back(curDosage);
-                }
+                drug.forms.push_back(curDosage);
                 break;
             }
             // Handles all Routes.
