@@ -5,6 +5,7 @@
 #include <vector>
 #include <stdexcept>
 #include <sstream>
+#include <algorithm>
 #include "DrugData.h"
 using namespace std;
 
