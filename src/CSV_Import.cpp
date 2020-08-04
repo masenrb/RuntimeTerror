@@ -62,9 +62,7 @@ vector<DrugData> csvToDrugData(string filename)
             // Handles all Dosage Forms.
             case 4:
             {
-                stringstream dosageStream(curData);
-                string curDosage;
-                drug.forms.push_back(curDosage.append("*"));
+                drug.forms.push_back(curData.append("*"));
                 break;
             }
             // Handles all Routes.
