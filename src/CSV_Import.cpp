@@ -62,7 +62,7 @@ vector<DrugData> csvToDrugData(string filename)
             // Handles all Dosage Forms.
             case 4:
             {
-                if(prescription){
+                if(drug.prescription){
                     drug.forms.push_back(curData.append("*"));
                 }else{
                     drug.forms.push_back(curData);
