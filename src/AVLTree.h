@@ -4,6 +4,7 @@
 
 struct AVLNode
 {
+    //Node structure for AVL nodes
     DrugData drug;
     AVLNode *left = nullptr;
     AVLNode *right = nullptr;

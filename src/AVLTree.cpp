@@ -13,14 +13,16 @@ AVLNode::AVLNode(DrugData input)
 }
 
 //AVLTree Constructor and Destructor
-AVLTree::AVLTree() //Mostly empty constructor
+AVLTree::AVLTree() 
 {
+    //Mostly empty default constructor
     root = nullptr;
 }
 
 AVLTree::~AVLTree()
 {
-    deleteTree(root); //Delete the tree starting at the root
+    //Delete the tree starting at the root
+    deleteTree(root); 
 
     //Delete all returned pointers
     for (int i = 0; i < dataPointers.size(); i++)
