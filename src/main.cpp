@@ -28,7 +28,7 @@ int main() {
 
     cout << "Loading data..." << endl;
 
-    vector<DrugData> drugs = csvToDrugData("RawData/Drugs_product.csv");
+    vector<DrugData> drugs = csvToDrugData("RawData/Drugs_product(Shortened).csv");
     HashMap drugs_hash(drugs.size());
     AVLTree drugs_avl;
 
@@ -62,7 +62,7 @@ int main() {
         while(correctSearch) {
             std::cout << "Would you like to search using an AVL Tree or a Map? (A/M) ";
             std::cin >> input;
-            input = ::toupper(input[0]);
+            std::transform(input.begin(), input.end(), input.begin(), ::toupper);
             if (input != "A" && input != "M") {
                 cout << "\nInvalid input, please enter A or M\n" << endl;
                 continue;
