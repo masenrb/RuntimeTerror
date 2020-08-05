@@ -166,7 +166,7 @@ int main() {
             std::cin >> input;
 
             std::cout << std::endl;
-            input = ::toupper(input[0]);
+            std::transform(input.begin(), input.end(), input.begin(), ::toupper);
             if (input == "Y") {
                 response = false;
             } else if (input == "N") {
