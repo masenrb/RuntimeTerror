@@ -60,11 +60,11 @@ int main() {
 
         //Search guard to make sure input is A or M
         while(correctSearch) {
-            std::cout << "Would you like to search using an AVL Tree or a Map? (A/M) ";
+            std::cout << "Would you like to search using an AVL Tree or a Hashmap? (A/H) ";
             std::cin >> input;
             std::transform(input.begin(), input.end(), input.begin(), ::toupper);
-            if (input != "A" && input != "M") {
-                cout << "\nInvalid input, please enter A or M\n" << endl;
+            if (input != "A" && input != "H") {
+                cout << "\nInvalid input, please enter A or H\n" << endl;
                 continue;
             } else {
                 correctSearch = false;
